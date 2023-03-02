@@ -35,23 +35,11 @@ namespace apiSocialWeb.Controllers.v1
             using Stream fileSream = new FileStream(filePath, FileMode.Create);
             userView.Photo.CopyTo(fileSream);
 
-            var contact = new User(userView.Name, userView.Email, filePath, userView.Notification);
+            var user = new User(userView.Name, userView.Email, filePath);
 
-            _userRepository.Add(contact);
+            _userRepository.Add(user);
 
             return Ok();
-        }
-
-        [Authorize]
-        [HttpPost]
-        [Route("{id}/download")]
-        public IActionResult DownloadPhoto(int id)
-        {
-            var user = _userRepository.Get(id);
-
-            var dataBytes = System.IO.File.ReadAllBytes(user.Photo);
-
-            return File(dataBytes, "image/png");
         }
 
         [Authorize]

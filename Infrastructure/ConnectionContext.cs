@@ -1,5 +1,4 @@
-﻿using apiSocialWeb.Domain.Models.CommentsAggregate;
-using apiSocialWeb.Domain.Models.PostsAggregate;
+﻿using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +8,8 @@ namespace apiSocialWeb.Infrastructure
     {
         public DbSet<User> User { get; set; } = default!;
         public DbSet<Posts> Posts { get; set; } = default!;
-        public DbSet<Comments> Comments { get; set; } = default!;
 
-        
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(

@@ -1,6 +1,7 @@
 ﻿using apiSocialWeb.Application.ViewModel;
 using apiSocialWeb.Domain.DTOs;
 using apiSocialWeb.Domain.Models.PostsAggregate;
+using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,14 @@ namespace apiSocialWeb.Controllers.v1
     [ApiVersion("1.0")]
     public class PostsController : ControllerBase
     {
-
+        private readonly IUserRepository _userRepository;
         private readonly IPostRepository _postRepository;
         private readonly ILogger<PostsController> _logger;
         private readonly IMapper _mapper;
 
-        public PostsController(IPostRepository postsRepository, ILogger<PostsController> logger, IMapper mapper)
+        public PostsController(IUserRepository userRepository, IPostRepository postsRepository, ILogger<PostsController> logger, IMapper mapper)
         {
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _postRepository = postsRepository ?? throw new ArgumentNullException(nameof(postsRepository));
             _logger = (logger ?? throw new ArgumentNullException(nameof(logger)));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -35,9 +37,9 @@ namespace apiSocialWeb.Controllers.v1
             using Stream fileSream = new FileStream(filePath, FileMode.Create);
             postView.Photo.CopyTo(fileSream);
 
-            var contact = new Posts(postView.Name, filePath, postView.Data, postView.Post);
+            var post = new Posts(postView.Name, filePath, postView.Post, postView.Comment, _userRepository.Get(postView.UserId));
 
-            _postRepository.Add(contact);
+            _postRepository.Add(post);
 
             return Ok();
         }
@@ -81,6 +83,5 @@ namespace apiSocialWeb.Controllers.v1
 
             return Ok(postDTOS);
         }
-
     }
 }

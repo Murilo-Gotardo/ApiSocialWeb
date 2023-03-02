@@ -21,7 +21,9 @@ namespace apiSocialWeb.Infrastructure.Repositories
                 new UserDTO()
                 {
                     Id = b.UserId,
-                    Name = b.Name
+                    Name = b.Name,
+                    Email = b.Email,
+                    Photo = b.Photo
                 }).ToList();
         }
 

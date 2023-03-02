@@ -15,7 +15,7 @@ namespace apiSocialWeb.Controllers
         {
             if (username == "la" && password == "123")
             {
-                var token = TokenService.GenerateToken(new User("la", "email", "Storage/nao", "saeg"));
+                var token = TokenService.GenerateToken(new User("la", "email", "Storage/nao"));
                 return Ok(token);
             }
             else

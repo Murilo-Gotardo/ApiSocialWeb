@@ -1,5 +1,4 @@
 ﻿using apiSocialWeb.Domain.DTOs;
-using apiSocialWeb.Domain.Models.CommentsAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
@@ -13,8 +12,6 @@ namespace apiSocialWeb.Application.Mapping
             CreateMap<User, UserDTO>();
 
             CreateMap<Posts, PostDTO>();
-
-            CreateMap<Comments, CommentsDTO>();
         }
     }
 }

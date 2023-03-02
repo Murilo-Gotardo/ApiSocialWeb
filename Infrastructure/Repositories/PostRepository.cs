@@ -1,5 +1,6 @@
 ﻿using apiSocialWeb.Domain.DTOs;
 using apiSocialWeb.Domain.Models.PostsAggregate;
+using static apiSocialWeb.Domain.Models.PostsAggregate.Posts;
 
 namespace apiSocialWeb.Infrastructure.Repositories
 {
@@ -21,7 +22,11 @@ namespace apiSocialWeb.Infrastructure.Repositories
                 new PostDTO()
                 {
                     Id = b.PostId,
-                    Name = b.Name
+                    Name = b.Name,
+                    Post = b.Post,
+                    Data = b.Data,
+                    Comments = b.CommentsData
+                   
                 }).ToList();
         }
 
