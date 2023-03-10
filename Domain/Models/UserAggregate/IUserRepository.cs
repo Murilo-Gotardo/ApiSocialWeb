@@ -9,5 +9,9 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
         List<UserDTO> Get(int pageNumber, int pageQuantity);
 
         User? Get(int id);
+
+        Task<bool> Put(int id, User user);
+
+        Task Delete(int id);
     }
 }

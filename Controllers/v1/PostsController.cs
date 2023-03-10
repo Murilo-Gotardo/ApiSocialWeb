@@ -33,6 +33,7 @@ namespace apiSocialWeb.Controllers.v1
 
 
         [HttpPost]
+        [Route("add")]
         public IActionResult Add([FromBody] PostsViewModel postView)
         {
 
@@ -45,7 +46,7 @@ namespace apiSocialWeb.Controllers.v1
 
      
         [HttpPost]
-        [Route("{id}/download")]
+        [Route("download/{id}")]
         public IActionResult DownloadPhoto(int id)
         {
             var post = _postRepository.Get(id);
@@ -57,6 +58,7 @@ namespace apiSocialWeb.Controllers.v1
 
        
         [HttpGet]
+        [Route("get")]
         public IActionResult Get(int pageNumber, int pageQuantity)
         {
 
@@ -69,11 +71,11 @@ namespace apiSocialWeb.Controllers.v1
             //throw new Exception("erro");
 
  
-            return Ok();
+            return Ok(post);
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("search/{id}")]
         public IActionResult Search(int id)
         {
             var post = _postRepository.Get(id);
@@ -81,6 +83,27 @@ namespace apiSocialWeb.Controllers.v1
             var postDTOS = _mapper.Map<PostDTO>(post);
 
             return Ok(postDTOS);
+        }
+
+        [HttpPut]
+        [Route("put/{id}")]
+        public IActionResult Put(int id, PostsViewModel postView) 
+        {
+            var post = new Posts(postView.Name, postView.Post, postView.Photo, postView.CommentData);
+
+            _postRepository.Put(id, post);
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("delete/{id}")]
+
+        public IActionResult Delete(int id)
+        {
+            _postRepository.Delete(id);
+
+            return Ok();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using apiSocialWeb.Application.ViewModel;
 using apiSocialWeb.Domain.DTOs;
+using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiSocialWeb.Controllers.v1
@@ -26,6 +26,7 @@ namespace apiSocialWeb.Controllers.v1
         }
 
         [HttpPost]
+        [Route("add")]
         public IActionResult Add([FromBody] UserViewModel userView)
         {
             var user = new User(userView.Name, userView.Email, userView.Photo, userView.Notification);
@@ -37,6 +38,7 @@ namespace apiSocialWeb.Controllers.v1
 
      
         [HttpGet]
+        [Route("get")]
         public IActionResult Get(int pageNumber, int pageQuantity)
         {
 
@@ -53,7 +55,7 @@ namespace apiSocialWeb.Controllers.v1
 
      
         [HttpGet]
-        [Route("{id}")]
+        [Route("search/{id}")]
         public IActionResult Search(int id)
         {
             var user = _userRepository.Get(id);
@@ -63,5 +65,25 @@ namespace apiSocialWeb.Controllers.v1
             return Ok(userDTOS);
         }
 
+        [HttpPut]
+        [Route("put/{id}")]
+        public IActionResult Put(int id, UserViewModel userView)
+        {
+            var user = new User(userView.Name, userView.Email, userView.Photo, userView.Notification);
+
+            _userRepository.Put(id, user);
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("delete/{id}")]
+
+        public IActionResult Delete(int id)
+        {
+            _userRepository.Delete(id);
+
+            return Ok();
+        }
     }
 }

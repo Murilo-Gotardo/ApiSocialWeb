@@ -1,5 +1,7 @@
 ﻿using apiSocialWeb.Domain.DTOs;
+using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
+using Microsoft.EntityFrameworkCore;
 
 namespace apiSocialWeb.Infrastructure.Repositories
 {
@@ -30,6 +32,35 @@ namespace apiSocialWeb.Infrastructure.Repositories
         public User? Get(int id)
         {
             return _user.User.Find(id);
+        }
+
+        public async Task<bool> Put(int id, User user)
+        {
+            var existingUser = await _user.User.FirstOrDefaultAsync(u => u.UserId == id);
+
+            if (existingUser != null)
+            {
+                // Update the properties of the existing post
+                existingUser.Name = user.Name;
+                existingUser.Email = user.Email;
+                existingUser.Photo = user.Photo;
+
+                _user.User.Update(existingUser);
+                await _user.SaveChangesAsync();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task Delete(int userId)
+        {
+
+            var user = await _user.User.FirstOrDefaultAsync(u => u.UserId == userId) ?? throw new Exception($"Post with ID {userId} not found.");
+            _user.User.Remove(user);
+
+            await _user.SaveChangesAsync();
         }
     }
 }

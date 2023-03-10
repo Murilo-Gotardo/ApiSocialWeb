@@ -9,5 +9,9 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
         List<PostDTO> Get(int pageNumber, int pageQuantity);
 
         Posts? Get(int id);
+
+        Task<bool> Put(int id, Posts post);
+
+        Task Delete(int id);
     }
 }
