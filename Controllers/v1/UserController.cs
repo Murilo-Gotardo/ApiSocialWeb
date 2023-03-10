@@ -25,24 +25,17 @@ namespace apiSocialWeb.Controllers.v1
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        [Authorize]
         [HttpPost]
-        public IActionResult Add([FromForm] UserViewModel userView)
+        public IActionResult Add([FromBody] UserViewModel userView)
         {
-
-            var filePath = Path.Combine("Storage", userView.Photo.FileName);
-
-            using Stream fileSream = new FileStream(filePath, FileMode.Create);
-            userView.Photo.CopyTo(fileSream);
-
-            var user = new User(userView.Name, userView.Email, filePath);
+            var user = new User(userView.Name, userView.Email, userView.Photo, userView.Notification);
 
             _userRepository.Add(user);
 
             return Ok();
         }
 
-        [Authorize]
+     
         [HttpGet]
         public IActionResult Get(int pageNumber, int pageQuantity)
         {
@@ -58,7 +51,7 @@ namespace apiSocialWeb.Controllers.v1
             return Ok(user);
         }
 
-        [Authorize]
+     
         [HttpGet]
         [Route("{id}")]
         public IActionResult Search(int id)

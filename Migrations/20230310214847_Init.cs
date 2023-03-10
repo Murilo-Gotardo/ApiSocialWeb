@@ -21,8 +21,7 @@ namespace apiSocialWeb.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     Photo = table.Column<string>(type: "text", nullable: true),
                     Post = table.Column<string>(type: "text", nullable: true),
-                    Comment = table.Column<string>(type: "text", nullable: true),
-                    CommentsData = table.Column<string[]>(type: "text[]", nullable: true)
+                    CommentData = table.Column<string[]>(type: "text[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,7 +36,8 @@ namespace apiSocialWeb.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    Photo = table.Column<string>(type: "text", nullable: true)
+                    Photo = table.Column<string>(type: "text", nullable: true),
+                    Notifications = table.Column<string[]>(type: "text[]", nullable: true)
                 },
                 constraints: table =>
                 {

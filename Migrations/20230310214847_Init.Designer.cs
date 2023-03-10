@@ -11,7 +11,7 @@ using apiSocialWeb.Infrastructure;
 namespace apiSocialWeb.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20230228190701_Init")]
+    [Migration("20230310214847_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -32,10 +32,8 @@ namespace apiSocialWeb.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<string[]>("CommentsData")
+                    b.Property<string[]>("CommentData")
+                        .IsRequired()
                         .HasColumnType("text[]");
 
                     b.Property<string>("Data")
@@ -68,6 +66,9 @@ namespace apiSocialWeb.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<string[]>("Notifications")
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Photo")
                         .HasColumnType("text");

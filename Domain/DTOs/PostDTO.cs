@@ -11,6 +11,6 @@ namespace apiSocialWeb.Domain.DTOs
 
         public string Data { get; set; }
 
-        public string[] Comments { get; set; }
+        public string[] CommentData { get; set; }
     }
 }

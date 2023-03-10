@@ -1,13 +1,16 @@
-﻿using apiSocialWeb.Domain.Models.UserAggregate;
+﻿using apiSocialWeb.Controllers.v1;
+using apiSocialWeb.Domain.Models.UserAggregate;
 using apiSocialWeb.Infrastructure.Repositories;
+using AutoMapper;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiSocialWeb.Domain.Models.PostsAggregate
 {
     public class Posts
     {
-        
+
+       
 
         [Key]
         public int PostId { get; set; }
@@ -20,11 +23,7 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
         public string? Post { get; set; }
 
-        public string? Comment { get; set; }
-
-        public string[]? CommentsData { get; set; }
-
-        
+        public string[] CommentData { get; set; }
 
         //[Display(Name = "User")]
         //public int UserId { get; set; }
@@ -32,24 +31,22 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
         //[ForeignKey("UserId")]
         //public User? User { get; set; }
 
-        public Posts(string name, string photo, string post, string comments, User user)
+        public Posts(string name, string photo, string post, string[] commentData)
         {
+            
+
             Name = name ?? throw new ArgumentException(nameof(name));
-
-            Photo = photo ?? throw new ArgumentException(nameof(photo));
-
-            Data = DateTime.Now.ToString("dd/MM/yyyy");
 
             Post = post ?? throw new ArgumentException(nameof(post));
 
-            CommentsData = new string[3];
+            Photo = photo ?? throw new ArgumentException(nameof(photo));
 
+            var date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 
-            CommentsData[0] = comments;
-            CommentsData[1] = user.Name;
-            CommentsData[2] = user.Photo;
+            Data = date;
+            
+
+            CommentData = commentData;
         }
-
-        private Posts() { }
     }
 }

@@ -3,8 +3,8 @@ using apiSocialWeb.Domain.DTOs;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace apiSocialWeb.Controllers.v1
 {
@@ -19,6 +19,8 @@ namespace apiSocialWeb.Controllers.v1
         private readonly ILogger<PostsController> _logger;
         private readonly IMapper _mapper;
 
+
+
         public PostsController(IUserRepository userRepository, IPostRepository postsRepository, ILogger<PostsController> logger, IMapper mapper)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
@@ -27,24 +29,21 @@ namespace apiSocialWeb.Controllers.v1
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        [Authorize]
+        
+
+
         [HttpPost]
-        public IActionResult Add([FromForm] PostsViewModel postView)
+        public IActionResult Add([FromBody] PostsViewModel postView)
         {
 
-            var filePath = Path.Combine("Storage", postView.Photo.FileName);
-
-            using Stream fileSream = new FileStream(filePath, FileMode.Create);
-            postView.Photo.CopyTo(fileSream);
-
-            var post = new Posts(postView.Name, filePath, postView.Post, postView.Comment, _userRepository.Get(postView.UserId));
+            var post = new Posts(postView.Name, postView.Post, postView.Photo, postView.CommentData);
 
             _postRepository.Add(post);
 
             return Ok();
         }
 
-        [Authorize]
+     
         [HttpPost]
         [Route("{id}/download")]
         public IActionResult DownloadPhoto(int id)
@@ -56,7 +55,7 @@ namespace apiSocialWeb.Controllers.v1
             return File(dataBytes, "image/png");
         }
 
-        [Authorize]
+       
         [HttpGet]
         public IActionResult Get(int pageNumber, int pageQuantity)
         {
@@ -69,10 +68,10 @@ namespace apiSocialWeb.Controllers.v1
 
             //throw new Exception("erro");
 
-            return Ok(post);
+ 
+            return Ok();
         }
 
-        [Authorize]
         [HttpGet]
         [Route("{id}")]
         public IActionResult Search(int id)

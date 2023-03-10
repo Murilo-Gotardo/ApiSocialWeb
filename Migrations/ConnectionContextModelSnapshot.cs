@@ -29,10 +29,8 @@ namespace apiSocialWeb.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<string[]>("CommentsData")
+                    b.Property<string[]>("CommentData")
+                        .IsRequired()
                         .HasColumnType("text[]");
 
                     b.Property<string>("Data")
@@ -65,6 +63,9 @@ namespace apiSocialWeb.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<string[]>("Notifications")
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Photo")
                         .HasColumnType("text");

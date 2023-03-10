@@ -8,9 +8,9 @@
 
 
 
-        public IFormFile? Photo { get; set; }
+        public string Photo { get; set; }
 
 
-        public string? Notification { get; set; }
+        public string[]? Notification { get; set; }
     }
 }

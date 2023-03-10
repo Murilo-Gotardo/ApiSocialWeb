@@ -25,7 +25,7 @@ namespace apiSocialWeb.Infrastructure.Repositories
                     Name = b.Name,
                     Post = b.Post,
                     Data = b.Data,
-                    Comments = b.CommentsData
+                    CommentData = b.CommentData
                    
                 }).ToList();
         }
