@@ -4,13 +4,13 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
 {
     public interface IUserRepository
     {
-        void Add(Client user);
+        void Add(User user);
 
         List<UserDTO> Get(int pageNumber, int pageQuantity);
 
-        Client? Get(int id);
+        User? Get(int id);
 
-        Task<bool> Put(int id, Client user);
+        Task<bool> Put(int id, User user);
 
         Task Delete(int id);
     }
