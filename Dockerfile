@@ -13,7 +13,7 @@ COPY . .
 WORKDIR "/src/."
 RUN dotnet build "apiSocialWeb.csproj" -c Release -o /app/build
 
-RUN Update-Database
+RUN dotnet ef database update --no-build --context ConnectionContext
 
 FROM build AS publish
 RUN dotnet publish "apiSocialWeb.csproj" -c Release -o /app/publish /p:UseAppHost=false
