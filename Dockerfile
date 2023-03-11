@@ -13,6 +13,7 @@ COPY . .
 WORKDIR "/src/."
 RUN dotnet build "apiSocialWeb.csproj" -c Release -o /app/build
 
+RUN dotnet tool install --global dotnet-ef
 RUN dotnet ef database update --no-build --context ConnectionContext
 
 FROM build AS publish

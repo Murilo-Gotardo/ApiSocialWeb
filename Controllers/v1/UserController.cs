@@ -29,7 +29,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("add")]
         public IActionResult Add([FromBody] UserViewModel userView)
         {
-            var user = new User(userView.Name, userView.Email, userView.Photo, userView.Notification);
+            var user = new Client(userView.Name, userView.Email, userView.Photo, userView.Notification);
 
             _userRepository.Add(user);
 
@@ -68,7 +68,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("put/{id}")]
         public IActionResult Put(int id, UserViewModel userView)
         {
-            var user = new User(userView.Name, userView.Email, userView.Photo, userView.Notification);
+            var user = new Client(userView.Name, userView.Email, userView.Photo, userView.Notification);
 
             _userRepository.Put(id, user);
 

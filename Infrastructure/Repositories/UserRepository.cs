@@ -9,7 +9,7 @@ namespace apiSocialWeb.Infrastructure.Repositories
     {
 
         private readonly ConnectionContext _user = new ConnectionContext();
-        public void Add(User user)
+        public void Add(Client user)
         {
             _user.User.Add(user);
             _user.SaveChanges();
@@ -29,12 +29,12 @@ namespace apiSocialWeb.Infrastructure.Repositories
                 }).ToList();
         }
 
-        public User? Get(int id)
+        public Client? Get(int id)
         {
             return _user.User.Find(id);
         }
 
-        public async Task<bool> Put(int id, User user)
+        public async Task<bool> Put(int id, Client user)
         {
             var existingUser = await _user.User.FirstOrDefaultAsync(u => u.UserId == id);
 

@@ -26,15 +26,6 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
             Photo = photo ?? throw new ArgumentException(nameof(photo));
 
             Notifications = notifications;
-
-            CREATE TABLE User(
-    UserID int,
-    Name text,
-    Email text,
-   Photo text,
-   Notifications text[],
-   Like text[]
-);
         }
     }
 }
