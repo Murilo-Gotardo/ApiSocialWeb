@@ -36,7 +36,6 @@ namespace apiSocialWeb.Controllers.v1
             return Ok();
         }
 
-     
         [HttpGet]
         [Route("get")]
         public IActionResult Get(int pageNumber, int pageQuantity)
