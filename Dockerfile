@@ -14,7 +14,7 @@ WORKDIR "/src/."
 RUN dotnet build "apiSocialWeb.csproj" -c Release -o /app/build
 
 RUN dotnet tool install --global dotnet-ef
-RUN dotnet ef database update --no-build --context ConnectionContext
+RUN dotnet ef database update
 
 FROM build AS publish
 RUN dotnet publish "apiSocialWeb.csproj" -c Release -o /app/publish /p:UseAppHost=false
