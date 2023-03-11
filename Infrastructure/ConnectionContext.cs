@@ -13,10 +13,6 @@ namespace apiSocialWeb.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(
-                "Server=postgresql://postgres:Q3JY8PwEg6zqxMUque5M@containers-us-west-17.railway.app:6345/railway;" +
-                "Port=6345;Database=railway;" +
-                "User Id=postgres;" +
-                "Password=Q3JY8PwEg6zqxMUque5M;"
-                ); 
+                "Server=containers-us-west-17.railway.app;Port=6345;Database=railway;Username=postgres;Password=Q3JY8PwEg6zqxMUque5M;");
     }
 }
