@@ -1,4 +1,5 @@
 ﻿using apiSocialWeb.Domain.DTOs;
+using apiSocialWeb.Domain.Models.CommentAggregate;
 
 namespace apiSocialWeb.Domain.Models.PostsAggregate
 {
@@ -6,7 +7,7 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
     {
         void Add(Posts post);
 
-        List<PostDTO> Get(int pageNumber, int pageQuantity);
+        List<Posts> Get(int pageNumber, int pageQuantity);
 
         Posts? Get(int id);
 

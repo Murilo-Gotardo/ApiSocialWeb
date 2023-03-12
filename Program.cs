@@ -1,4 +1,5 @@
 using apiSocialWeb.Application.Mapping;
+using apiSocialWeb.Domain.Models.CommentAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using apiSocialWeb.Infrastructure.Repositories;
@@ -32,17 +33,6 @@ builder.Services.AddVersionedApiExplorer(setup =>
     setup.SubstituteApiVersionInUrl = true;
 });
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.OperationFilter<SwaggerDefaultValues>();
-});
-
-builder.Services.AddTransient<IUserRepository, UserRepository>();
-
-builder.Services.AddTransient<IPostRepository, PostRepository>();
-
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "MyPolicy",
@@ -53,6 +43,20 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
         });
 });
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.OperationFilter<SwaggerDefaultValues>();
+});
+
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+builder.Services.AddTransient<IPostRepository, PostRepository>();
+
+builder.Services.AddTransient<ICommentRepository, CommentRepository>();
+
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
+
 
 var app = builder.Build();
 var versionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();

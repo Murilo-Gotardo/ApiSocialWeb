@@ -1,4 +1,5 @@
 ﻿using apiSocialWeb.Domain.DTOs;
+using apiSocialWeb.Domain.Models.CommentAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using Glimpse.Core.Extensibility;
 using Microsoft.EntityFrameworkCore;
@@ -15,20 +16,12 @@ namespace apiSocialWeb.Infrastructure.Repositories
             _post.SaveChanges();
         }
 
-        public List<PostDTO> Get(int pageNumber, int pageQuantity)
+        public List<Posts> Get(int pageNumber, int pageQuantity)
         {
-            return _post.Posts.Skip((pageNumber - 1) * pageQuantity)
+            return _post.Posts
+                .Skip((pageNumber - 1) * pageQuantity)
                 .Take(pageQuantity)
-                .Select(b =>
-                new PostDTO()
-                {
-                    Id = b.PostId,
-                    Name = b.Name,
-                    Post = b.Post,
-                    Data = b.Data,
-                    CommentData = b.CommentData
-                   
-                }).ToList();
+                .ToList();
         }
 
         public Posts? Get(int id)

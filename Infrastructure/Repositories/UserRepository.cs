@@ -15,18 +15,12 @@ namespace apiSocialWeb.Infrastructure.Repositories
             _user.SaveChanges();
         }
 
-        public List<UserDTO> Get(int pageNumber, int pageQuantity)
+        public List<User> Get(int pageNumber, int pageQuantity)
         {
-            return _user.User.Skip((pageNumber - 1) * pageQuantity)
+            return _user.User
+                .Skip((pageNumber - 1) * pageQuantity)
                 .Take(pageQuantity)
-                .Select(b => 
-                new UserDTO()
-                {
-                    Id = b.UserId,
-                    Name = b.Name,
-                    Email = b.Email,
-                    Photo = b.Photo
-                }).ToList();
+                .ToList();
         }
 
         public User? Get(int id)

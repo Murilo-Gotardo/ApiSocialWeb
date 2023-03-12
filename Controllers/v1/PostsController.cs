@@ -4,13 +4,11 @@ using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace apiSocialWeb.Controllers.v1
 {
-
     [ApiController]
-    [Route("api/v{version:ApiVersion}/post")]
+    [Route("api/v{version:ApiVersion}/posts")]
     [ApiVersion("1.0")]
     public class PostsController : ControllerBase
     {
@@ -18,8 +16,6 @@ namespace apiSocialWeb.Controllers.v1
         private readonly IPostRepository _postRepository;
         private readonly ILogger<PostsController> _logger;
         private readonly IMapper _mapper;
-
-
 
         public PostsController(IUserRepository userRepository, IPostRepository postsRepository, ILogger<PostsController> logger, IMapper mapper)
         {
@@ -29,15 +25,11 @@ namespace apiSocialWeb.Controllers.v1
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        
-
-
         [HttpPost]
         [Route("add")]
         public IActionResult Add([FromBody] PostsViewModel postView)
         {
-
-            var post = new Posts(postView.Name, postView.Post, postView.Photo, postView.CommentData);
+            var post = new Posts(postView.Name, postView.Photo, postView.Post, postView.UserId);
 
             _postRepository.Add(post);
 
@@ -55,7 +47,6 @@ namespace apiSocialWeb.Controllers.v1
 
             return File(dataBytes, "image/png");
         }
-
        
         [HttpGet]
         [Route("get")]
@@ -89,7 +80,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("put/{id}")]
         public IActionResult Put(int id, PostsViewModel postView) 
         {
-            var post = new Posts(postView.Name, postView.Post, postView.Photo, postView.CommentData);
+            var post = new Posts(postView.Name, postView.Post, postView.Photo, postView.UserId);
 
             _postRepository.Put(id, post);
 

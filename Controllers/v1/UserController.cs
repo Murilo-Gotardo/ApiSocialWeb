@@ -1,6 +1,5 @@
 ﻿using apiSocialWeb.Application.ViewModel;
 using apiSocialWeb.Domain.DTOs;
-using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +28,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("add")]
         public IActionResult Add([FromBody] UserViewModel userView)
         {
-            var user = new User(userView.Name, userView.Email, userView.Photo, userView.Notification);
+            var user = new User(userView.Name, userView.Email, userView.Photo);
 
             _userRepository.Add(user);
 
@@ -68,7 +67,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("put/{id}")]
         public IActionResult Put(int id, UserViewModel userView)
         {
-            var user = new User(userView.Name, userView.Email, userView.Photo, userView.Notification);
+            var user = new User(userView.Name, userView.Email, userView.Photo);
 
             _userRepository.Put(id, user);
 

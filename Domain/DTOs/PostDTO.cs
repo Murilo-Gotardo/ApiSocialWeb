@@ -1,4 +1,5 @@
-﻿using static apiSocialWeb.Domain.Models.PostsAggregate.Posts;
+﻿using apiSocialWeb.Domain.Models.CommentAggregate;
+using static apiSocialWeb.Domain.Models.PostsAggregate.Posts;
 
 namespace apiSocialWeb.Domain.DTOs
 {
@@ -11,6 +12,6 @@ namespace apiSocialWeb.Domain.DTOs
 
         public string Data { get; set; }
 
-        public string[] CommentData { get; set; }
+        public Comment Comment { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using apiSocialWeb.Controllers.v1;
+﻿using apiSocialWeb.Application.ViewModel;
+using apiSocialWeb.Controllers.v1;
+using apiSocialWeb.Domain.Models.CommentAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using apiSocialWeb.Infrastructure.Repositories;
 using AutoMapper;
@@ -9,13 +11,10 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 {
     public class Posts
     {
-
-       
-
         [Key]
         public int PostId { get; set; }
 
-        public string? Data { get; set; }
+        public string? Date { get; set; }
 
         public string? Name { get; set; }
 
@@ -23,15 +22,13 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
         public string? Post { get; set; }
 
-        public string[] CommentData { get; set; }
+        public int UserId { get; set; }
 
-        //[Display(Name = "User")]
-        //public int UserId { get; set; }
+        public User User { get; set; }
 
-        //[ForeignKey("UserId")]
-        //public User? User { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
-        public Posts(string name, string photo, string post, string[] commentData)
+        public Posts(string name, string photo, string post, int userId)
         {
             
 
@@ -43,10 +40,9 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
             var date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 
-            Data = date;
-            
+            Date = date;
 
-            CommentData = commentData;
+            UserId = userId;
         }
     }
 }

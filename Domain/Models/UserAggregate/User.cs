@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using apiSocialWeb.Domain.Models.PostsAggregate;
 using System.ComponentModel.DataAnnotations;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace apiSocialWeb.Domain.Models.UserAggregate
 {
@@ -15,9 +14,13 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
 
         public string? Photo { get; set; }
 
-        public string[]? Notifications { get; set; }
+        //public string[]? Notifications { get; set; }
 
-        public User(string name, string email, string photo, string[]? notifications)
+        //public string[]? Like { get; set; }
+
+        public ICollection<Posts> Posts { get; set; }
+
+        public User(string name, string email, string photo)
         {
             Name = name ?? throw new ArgumentException(nameof(name));
 
@@ -25,7 +28,9 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
 
             Photo = photo ?? throw new ArgumentException(nameof(photo));
 
-            Notifications = notifications;
+            //Notifications = notifications ?? throw new ArgumentException(nameof(notifications)); ;
+
+            //Like = like ?? throw new ArgumentException(nameof(Like));
         }
     }
 }
