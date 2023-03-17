@@ -1,5 +1,6 @@
 ﻿using apiSocialWeb.Domain.DTOs;
 using apiSocialWeb.Domain.Models.CommentAggregate;
+using apiSocialWeb.Domain.Models.LikeAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using Glimpse.Core.Extensibility;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,17 @@ namespace apiSocialWeb.Infrastructure.Repositories
             .Skip((pageNumber - 1) * pageQuantity)
             .Take(pageQuantity)
             .ToList();
+        }
+
+        public int GetRows(int id)
+        {
+            List<Comment> comment = _comment.Comment
+            .Where(p => p.PostId == id)
+            .ToList();
+
+            int count = comment.Count; // Obtem o número de linhas
+
+            return count;
         }
 
 

@@ -12,8 +12,8 @@ using apiSocialWeb.Infrastructure;
 namespace apiSocialWeb.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20230312201042_Initdatabase")]
-    partial class Initdatabase
+    [Migration("20230317000838_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,60 @@ namespace apiSocialWeb.Migrations
                     b.ToTable("Comment");
                 });
 
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.Like", b =>
+                {
+                    b.Property<int>("LikeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LikeId"));
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("LikeId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Like");
+                });
+
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.NotificationAggregate.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NotificationId"));
+
+                    b.Property<string>("NotificationType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("NotificationId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("apiSocialWeb.Domain.Models.PostsAggregate.Posts", b =>
                 {
                     b.Property<int>("PostId")
@@ -69,9 +123,6 @@ namespace apiSocialWeb.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
 
                     b.Property<string>("Date")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<string>("Photo")
@@ -115,13 +166,51 @@ namespace apiSocialWeb.Migrations
             modelBuilder.Entity("apiSocialWeb.Domain.Models.CommentAggregate.Comment", b =>
                 {
                     b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
-                        .WithMany("Comments")
+                        .WithMany("comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("apiSocialWeb.Domain.Models.UserAggregate.User", "User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.Like", b =>
+                {
+                    b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
+                        .WithMany("likes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("apiSocialWeb.Domain.Models.UserAggregate.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.NotificationAggregate.Notification", b =>
+                {
+                    b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("apiSocialWeb.Domain.Models.UserAggregate.User", "User")
+                        .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -144,11 +233,15 @@ namespace apiSocialWeb.Migrations
 
             modelBuilder.Entity("apiSocialWeb.Domain.Models.PostsAggregate.Posts", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("comments");
+
+                    b.Navigation("likes");
                 });
 
             modelBuilder.Entity("apiSocialWeb.Domain.Models.UserAggregate.User", b =>
                 {
+                    b.Navigation("Notifications");
+
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

@@ -29,7 +29,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("add")]
         public IActionResult Add([FromBody] PostsViewModel postView)
         {
-            var post = new Posts(postView.Name, postView.Photo, postView.Post, postView.UserId);
+            var post = new Posts(postView.Photo, postView.Post, postView.UserId);
 
             _postRepository.Add(post);
 
@@ -80,7 +80,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("put/{id}")]
         public IActionResult Put(int id, PostsViewModel postView) 
         {
-            var post = new Posts(postView.Name, postView.Post, postView.Photo, postView.UserId);
+            var post = new Posts(postView.Post, postView.Photo, postView.UserId);
 
             _postRepository.Put(id, post);
 

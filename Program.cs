@@ -1,5 +1,7 @@
 using apiSocialWeb.Application.Mapping;
 using apiSocialWeb.Domain.Models.CommentAggregate;
+using apiSocialWeb.Domain.Models.LikeAggregate;
+using apiSocialWeb.Domain.Models.NotificationAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using apiSocialWeb.Infrastructure.Repositories;
@@ -54,6 +56,10 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 
 builder.Services.AddTransient<ICommentRepository, CommentRepository>();
+
+builder.Services.AddTransient<ILikeRepository, LikeRepository>();
+
+builder.Services.AddTransient<INotificationRepository, NotificationRepository>();
 
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
 

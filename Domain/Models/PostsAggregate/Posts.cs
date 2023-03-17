@@ -1,11 +1,10 @@
-﻿using apiSocialWeb.Application.ViewModel;
-using apiSocialWeb.Controllers.v1;
-using apiSocialWeb.Domain.Models.CommentAggregate;
+﻿using apiSocialWeb.Domain.Models.CommentAggregate;
+using apiSocialWeb.Domain.Models.LikeAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
-using apiSocialWeb.Infrastructure.Repositories;
-using AutoMapper;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Linq;
 
 namespace apiSocialWeb.Domain.Models.PostsAggregate
 {
@@ -16,8 +15,6 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
         public string? Date { get; set; }
 
-        public string? Name { get; set; }
-
         public string? Photo { get; set; }
 
         public string? Post { get; set; }
@@ -26,23 +23,24 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
         public User User { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Comment> comments { get; set; }
 
-        public Posts(string name, string photo, string post, int userId)
+        public ICollection<Like> likes { get; set; }
+        
+
+        public Posts(string photo, string post, int userId)
         {
-            
-
-            Name = name ?? throw new ArgumentException(nameof(name));
 
             Post = post ?? throw new ArgumentException(nameof(post));
 
             Photo = photo ?? throw new ArgumentException(nameof(photo));
 
-            var date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            var date = DateTime.Now.ToString("dd/MM/yyyy");
 
             Date = date;
-
             UserId = userId;
+
+            
         }
     }
 }

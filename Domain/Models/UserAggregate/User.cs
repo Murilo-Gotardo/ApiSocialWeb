@@ -1,4 +1,5 @@
-﻿using apiSocialWeb.Domain.Models.PostsAggregate;
+﻿using apiSocialWeb.Domain.Models.NotificationAggregate;
+using apiSocialWeb.Domain.Models.PostsAggregate;
 using System.ComponentModel.DataAnnotations;
 
 namespace apiSocialWeb.Domain.Models.UserAggregate
@@ -14,11 +15,9 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
 
         public string? Photo { get; set; }
 
-        //public string[]? Notifications { get; set; }
-
-        //public string[]? Like { get; set; }
-
         public ICollection<Posts> Posts { get; set; }
+
+        public ICollection<Notification> Notifications { get; set; }
 
         public User(string name, string email, string photo)
         {

@@ -35,8 +35,8 @@ namespace apiSocialWeb.Domain.Models.CommentAggregate
 
         public Comment (string iComment, string userName, string photo, int postId, int userId)
         {
-            Icomment = iComment ?? throw new ArgumentException(nameof(iComment)); ;
-            UserName = userName ?? throw new ArgumentException(nameof(userName)); ;
+            Icomment = iComment ?? throw new ArgumentException(nameof(iComment));
+            UserName = userName ?? throw new ArgumentException(nameof(userName));
             Photo = photo ?? throw new ArgumentException(nameof(photo));
             UserId = userId;
             PostId = postId;

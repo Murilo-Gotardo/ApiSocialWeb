@@ -4,7 +4,6 @@ namespace apiSocialWeb.Application.ViewModel
 {
     public class PostsViewModel
     {
-        public string Name { get; set; }
 
         public string Post { get; set; }
 

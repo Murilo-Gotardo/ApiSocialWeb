@@ -1,6 +1,5 @@
 ﻿using apiSocialWeb.Application.ViewModel;
 using apiSocialWeb.Domain.Models.CommentAggregate;
-using apiSocialWeb.Domain.Models.PostsAggregate;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,14 +8,14 @@ namespace apiSocialWeb.Controllers.v1
     [ApiController]
     [Route("api/v{version:ApiVersion}/comment")]
     [ApiVersion("1.0")]
-    public class CommentConttroler : ControllerBase
+    public class CommentController : ControllerBase
     {
 
         private readonly ICommentRepository _commentRepository;
-        private readonly ILogger<CommentConttroler> _logger;
+        private readonly ILogger<CommentController> _logger;
         private readonly IMapper _mapper;
 
-        public CommentConttroler(ICommentRepository commentRepository, ILogger<CommentConttroler> logger, IMapper mapper)
+        public CommentController(ICommentRepository commentRepository, ILogger<CommentController> logger, IMapper mapper)
         {
             _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             _logger = (logger ?? throw new ArgumentNullException(nameof(logger)));
@@ -49,6 +48,16 @@ namespace apiSocialWeb.Controllers.v1
 
 
             return Ok(comment);
+        }
+
+        [HttpGet]
+        [Route("getrow/{id}")]
+
+        public IActionResult GetRows(int id)
+        {
+            var rows = _commentRepository.GetRows(id);
+
+            return Ok(rows);
         }
 
         [HttpGet]
