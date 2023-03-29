@@ -1,7 +1,10 @@
 ﻿using apiSocialWeb.Application.ViewModel;
 using apiSocialWeb.Domain.Models.CommentAggregate;
+using apiSocialWeb.Domain.Models.PostsAggregate;
+using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Services.CircuitBreaker;
 
 namespace apiSocialWeb.Controllers.v1
 {
@@ -10,13 +13,16 @@ namespace apiSocialWeb.Controllers.v1
     [ApiVersion("1.0")]
     public class CommentController : ControllerBase
     {
-
+        private readonly IUserRepository _userRepository;
+        private readonly IPostRepository _postRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly ILogger<CommentController> _logger;
         private readonly IMapper _mapper;
 
-        public CommentController(ICommentRepository commentRepository, ILogger<CommentController> logger, IMapper mapper)
+        public CommentController(IUserRepository userRepository, IPostRepository postsRepository, ICommentRepository commentRepository, ILogger<CommentController> logger, IMapper mapper)
         {
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _postRepository = postsRepository ?? throw new ArgumentNullException(nameof(postsRepository));
             _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             _logger = (logger ?? throw new ArgumentNullException(nameof(logger)));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -26,9 +32,20 @@ namespace apiSocialWeb.Controllers.v1
         [Route("add")]
         public IActionResult Add([FromBody] CommentViewModel commentView)
         {
-            var comment = new Comment(commentView.Icomment, commentView.UserName, commentView.Photo, commentView.PostId, commentView.UserId);
+
+            var user = _userRepository.Get(commentView.UserId);
+
+            var comment = new Comment(commentView.Icomment, commentView.Photo, commentView.PostId, commentView.UserId, user.Name);
+
+
 
             _commentRepository.Add(comment);
+
+
+            int rows = _commentRepository.GetRows(commentView.PostId);
+
+            var post = new Posts(rows);
+            _postRepository.Put(commentView.PostId, post);
 
             return Ok();
         }
@@ -81,7 +98,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("put/{id}")]
         public IActionResult Put(int id, CommentViewModel commentView)
         {
-            var comment = new Comment(commentView.Icomment, commentView.UserName, commentView.Photo, commentView.PostId, commentView.UserId);
+            var comment = new Comment(commentView.Icomment, commentView.Photo, commentView.PostId, commentView.UserId);
 
             _commentRepository.Put(id, comment);
 

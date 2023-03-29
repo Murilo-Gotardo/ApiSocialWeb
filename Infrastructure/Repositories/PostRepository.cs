@@ -3,6 +3,7 @@ using apiSocialWeb.Domain.Models.CommentAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using Glimpse.Core.Extensibility;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace apiSocialWeb.Infrastructure.Repositories
 {
@@ -24,6 +25,16 @@ namespace apiSocialWeb.Infrastructure.Repositories
                 .ToList();
         }
 
+        public List<Posts> GetUserPost(int userId, int pageNumber, int pageQuantity)
+        {
+            return _post.Posts
+            .Where(p => p.UserId == userId)
+            .Skip((pageNumber - 1) * pageQuantity)
+            .Take(pageQuantity)
+            .ToList();
+
+        }
+
         public Posts? Get(int id)
         {
             return _post.Posts.Find(id);
@@ -36,9 +47,17 @@ namespace apiSocialWeb.Infrastructure.Repositories
             if (existingPost != null)
             {
                 // Update the properties of the existing post
-                existingPost.Photo = post.Photo;
-                existingPost.Post = post.Post;
-
+                if (post.Photo == null && post.Post == null)
+                {
+                    existingPost.CommentCount = post.CommentCount;
+                    existingPost.LikeCount = post.LikeCount;
+                }
+                else
+                {
+                    existingPost.Photo = post.Photo;
+                    existingPost.Post = post.Post;
+                }
+                       
                 _post.Posts.Update(existingPost);
                 await _post.SaveChangesAsync();
 

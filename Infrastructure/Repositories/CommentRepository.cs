@@ -1,11 +1,5 @@
-﻿using apiSocialWeb.Domain.DTOs;
-using apiSocialWeb.Domain.Models.CommentAggregate;
-using apiSocialWeb.Domain.Models.LikeAggregate;
-using apiSocialWeb.Domain.Models.PostsAggregate;
-using Glimpse.Core.Extensibility;
+﻿using apiSocialWeb.Domain.Models.CommentAggregate;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace apiSocialWeb.Infrastructure.Repositories
 {

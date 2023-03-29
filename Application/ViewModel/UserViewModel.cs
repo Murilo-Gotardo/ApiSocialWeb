@@ -6,8 +6,6 @@
 
         public string? Email { get; set; }
 
-
-
         public string Photo { get; set; }
 
 

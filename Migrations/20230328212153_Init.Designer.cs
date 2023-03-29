@@ -12,8 +12,8 @@ using apiSocialWeb.Infrastructure;
 namespace apiSocialWeb.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20230317000838_init")]
-    partial class init
+    [Migration("20230328212153_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,8 +122,14 @@ namespace apiSocialWeb.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
 
+                    b.Property<int?>("CommentCount")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Date")
                         .HasColumnType("text");
+
+                    b.Property<int?>("LikeCount")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Photo")
                         .HasColumnType("text");
@@ -133,6 +139,9 @@ namespace apiSocialWeb.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
 
                     b.HasKey("PostId");
 
@@ -166,7 +175,7 @@ namespace apiSocialWeb.Migrations
             modelBuilder.Entity("apiSocialWeb.Domain.Models.CommentAggregate.Comment", b =>
                 {
                     b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
-                        .WithMany("comments")
+                        .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -185,7 +194,7 @@ namespace apiSocialWeb.Migrations
             modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.Like", b =>
                 {
                     b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
-                        .WithMany("likes")
+                        .WithMany("Likes")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -233,9 +242,9 @@ namespace apiSocialWeb.Migrations
 
             modelBuilder.Entity("apiSocialWeb.Domain.Models.PostsAggregate.Posts", b =>
                 {
-                    b.Navigation("comments");
+                    b.Navigation("Comments");
 
-                    b.Navigation("likes");
+                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("apiSocialWeb.Domain.Models.UserAggregate.User", b =>

@@ -33,7 +33,7 @@ namespace apiSocialWeb.Domain.Models.CommentAggregate
         {
         }
 
-        public Comment (string iComment, string userName, string photo, int postId, int userId)
+        public Comment (string iComment, string photo, int postId, int userId, string? userName = null)
         {
             Icomment = iComment ?? throw new ArgumentException(nameof(iComment));
             UserName = userName ?? throw new ArgumentException(nameof(userName));

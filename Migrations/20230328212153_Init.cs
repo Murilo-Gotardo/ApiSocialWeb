@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace apiSocialWeb.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,6 +36,9 @@ namespace apiSocialWeb.Migrations
                     Date = table.Column<string>(type: "text", nullable: true),
                     Photo = table.Column<string>(type: "text", nullable: true),
                     Post = table.Column<string>(type: "text", nullable: true),
+                    UserName = table.Column<string>(type: "text", nullable: true),
+                    CommentCount = table.Column<int>(type: "integer", nullable: true),
+                    LikeCount = table.Column<int>(type: "integer", nullable: true),
                     UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

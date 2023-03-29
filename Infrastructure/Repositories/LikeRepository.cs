@@ -1,5 +1,4 @@
-﻿using apiSocialWeb.Domain.Models.CommentAggregate;
-using apiSocialWeb.Domain.Models.LikeAggregate;
+﻿using apiSocialWeb.Domain.Models.LikeAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace apiSocialWeb.Infrastructure.Repositories
@@ -14,7 +13,7 @@ namespace apiSocialWeb.Infrastructure.Repositories
         }
 
 
-        public int Get(int id)
+        public int GetRows(int id)
         {
             List<Like> likes = _like.Like
             .Where(p => p.PostId == id)

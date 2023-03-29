@@ -1,5 +1,6 @@
 ﻿using apiSocialWeb.Application.ViewModel;
 using apiSocialWeb.Domain.DTOs;
+using apiSocialWeb.Domain.Models.CommentAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
@@ -29,7 +30,10 @@ namespace apiSocialWeb.Controllers.v1
         [Route("add")]
         public IActionResult Add([FromBody] PostsViewModel postView)
         {
-            var post = new Posts(postView.Photo, postView.Post, postView.UserId);
+
+            var user = _userRepository.Get(postView.UserId);
+
+            var post = new Posts(postView.Photo, postView.UserId, postView.Post, user.Name);
 
             _postRepository.Add(post);
 
@@ -66,6 +70,15 @@ namespace apiSocialWeb.Controllers.v1
         }
 
         [HttpGet]
+        [Route("getuserpost/{id}")]
+        public IActionResult Get(int id, int pageNumber, int pageQuantity)
+        {
+            var userPosts = _postRepository.GetUserPost(id, pageNumber, pageQuantity);
+
+            return Ok(userPosts);
+        }
+
+        [HttpGet]
         [Route("search/{id}")]
         public IActionResult Search(int id)
         {
@@ -80,7 +93,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("put/{id}")]
         public IActionResult Put(int id, PostsViewModel postView) 
         {
-            var post = new Posts(postView.Post, postView.Photo, postView.UserId);
+            var post = new Posts(postView.Post, postView.UserId, postView.Photo);
 
             _postRepository.Put(id, post);
 

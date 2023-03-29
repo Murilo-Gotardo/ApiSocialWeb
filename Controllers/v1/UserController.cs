@@ -58,9 +58,7 @@ namespace apiSocialWeb.Controllers.v1
         {
             var user = _userRepository.Get(id);
 
-            var userDTOS = _mapper.Map<UserDTO>(user);
-
-            return Ok(userDTOS);
+            return Ok(user);
         }
 
         [HttpPut]

@@ -5,7 +5,7 @@
 
         void Add(Like like);
 
-        int Get(int id);
+        int GetRows(int id);
 
         Task Delete(int id);
     }
