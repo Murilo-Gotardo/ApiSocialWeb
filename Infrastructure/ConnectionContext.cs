@@ -12,7 +12,7 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<User> User { get; set; } = default!;
         public DbSet<Posts> Posts { get; set; } = default!;
         public DbSet<Comment> Comment { get; set; } = default!;
-        public DbSet<Like> Like { get; set; } = default!;
+        public DbSet<CommentLike> CommentLike { get; set; } = default!;
 
         public DbSet<Notification> Notifications { get; set; } = default!;
 

@@ -28,11 +28,11 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
         public ICollection<Comment> Comments { get; set; }
 
-        public ICollection<Like> Likes { get; set; }
+        public ICollection<CommentLike> Likes { get; set; }
         
 
 
-        public Posts(int commentCount = 0, int likeCount = 0) 
+        public Posts(int? commentCount = null, int likeCount = 0) 
         {
             CommentCount = commentCount;
             LikeCount = likeCount;

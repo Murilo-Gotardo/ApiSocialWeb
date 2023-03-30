@@ -12,7 +12,7 @@ using apiSocialWeb.Infrastructure;
 namespace apiSocialWeb.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20230328212153_Init")]
+    [Migration("20230330001314_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -60,7 +60,7 @@ namespace apiSocialWeb.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.Like", b =>
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.CommentLike", b =>
                 {
                     b.Property<int>("LikeId")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace apiSocialWeb.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Like");
+                    b.ToTable("CommentLike");
                 });
 
             modelBuilder.Entity("apiSocialWeb.Domain.Models.NotificationAggregate.Notification", b =>
@@ -191,7 +191,7 @@ namespace apiSocialWeb.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.Like", b =>
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.CommentLike", b =>
                 {
                     b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
                         .WithMany("Likes")

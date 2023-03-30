@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace apiSocialWeb.Domain.Models.LikeAggregate
 {
-    public class Like
+    public class CommentLike
     {
 
         [Key]
@@ -19,11 +19,11 @@ namespace apiSocialWeb.Domain.Models.LikeAggregate
         public Posts Post { get; set; }
 
 
-        public Like()
+        public CommentLike()
         {
         }
 
-        public Like(int postId, int userId)
+        public CommentLike(int userId, int postId)
         {
             UserId = userId;
             PostId = postId;

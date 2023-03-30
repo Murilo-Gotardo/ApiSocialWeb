@@ -83,7 +83,7 @@ namespace apiSocialWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Like",
+                name: "CommentLike",
                 columns: table => new
                 {
                     LikeId = table.Column<int>(type: "integer", nullable: false)
@@ -93,15 +93,15 @@ namespace apiSocialWeb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Like", x => x.LikeId);
+                    table.PrimaryKey("PK_CommentLike", x => x.LikeId);
                     table.ForeignKey(
-                        name: "FK_Like_Posts_PostId",
+                        name: "FK_CommentLike_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Like_User_UserId",
+                        name: "FK_CommentLike_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
@@ -147,13 +147,13 @@ namespace apiSocialWeb.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_PostId",
-                table: "Like",
+                name: "IX_CommentLike_PostId",
+                table: "CommentLike",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_UserId",
-                table: "Like",
+                name: "IX_CommentLike_UserId",
+                table: "CommentLike",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -179,7 +179,7 @@ namespace apiSocialWeb.Migrations
                 name: "Comment");
 
             migrationBuilder.DropTable(
-                name: "Like");
+                name: "CommentLike");
 
             migrationBuilder.DropTable(
                 name: "Notifications");

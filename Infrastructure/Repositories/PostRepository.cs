@@ -47,15 +47,19 @@ namespace apiSocialWeb.Infrastructure.Repositories
             if (existingPost != null)
             {
                 // Update the properties of the existing post
-                if (post.Photo == null && post.Post == null)
-                {
-                    existingPost.CommentCount = post.CommentCount;
-                    existingPost.LikeCount = post.LikeCount;
-                }
-                else
+                if (post.Photo != null && post.Post != null)
                 {
                     existingPost.Photo = post.Photo;
                     existingPost.Post = post.Post;
+                }
+                else if (post.CommentCount != null)
+                {
+                    existingPost.CommentCount = post.CommentCount;
+                    
+                }
+                else if (post.LikeCount != null) 
+                {
+                    existingPost.LikeCount = post.LikeCount;
                 }
                        
                 _post.Posts.Update(existingPost);

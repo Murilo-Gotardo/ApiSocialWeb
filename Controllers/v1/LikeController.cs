@@ -30,13 +30,13 @@ namespace apiSocialWeb.Controllers.v1
         [Route("add")]
         public IActionResult Add([FromBody] LikeViewModel likeView)
         {
-            var like = new Like(likeView.UserId, likeView.PostId);
+            var like = new CommentLike(likeView.UserId, likeView.PostId);
 
             _likeRepository.Add(like);
 
             int rows = _likeRepository.GetRows(likeView.PostId);
 
-            var post = new Posts(rows);
+            var post = new Posts(null, rows);
             _postRepository.Put(likeView.PostId, post);
 
             return Ok();
