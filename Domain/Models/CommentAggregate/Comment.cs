@@ -12,9 +12,9 @@ namespace apiSocialWeb.Domain.Models.CommentAggregate
         [Key]
         public int CommentId { get; set; }
 
-        public string? Icomment { get; set; }
+        public string? Icomment_txt { get; set; }
 
-        public string? UserName { get; set; }
+        public string? UserName_txt { get; set; }
 
         public string? Photo { get; set; }
 
@@ -35,8 +35,8 @@ namespace apiSocialWeb.Domain.Models.CommentAggregate
 
         public Comment (string iComment, string photo, int postId, int userId, string? userName = null)
         {
-            Icomment = iComment ?? throw new ArgumentException(nameof(iComment));
-            UserName = userName ?? throw new ArgumentException(nameof(userName));
+            Icomment_txt = iComment ?? throw new ArgumentException(nameof(iComment));
+            UserName_txt = userName ?? throw new ArgumentException(nameof(userName));
             Photo = photo ?? throw new ArgumentException(nameof(photo));
             UserId = userId;
             PostId = postId;

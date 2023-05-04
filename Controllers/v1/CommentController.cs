@@ -35,7 +35,7 @@ namespace apiSocialWeb.Controllers.v1
 
             var user = _userRepository.Get(commentView.UserId);
 
-            var comment = new Comment(commentView.Icomment, commentView.Photo, commentView.PostId, commentView.UserId, user.Name);
+            var comment = new Comment(commentView.Icomment, commentView.Photo, commentView.PostId, commentView.UserId, user.Name_txt);
 
 
 

@@ -33,7 +33,7 @@ namespace apiSocialWeb.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Icomment")
+                    b.Property<string>("Icomment_txt")
                         .HasColumnType("text");
 
                     b.Property<string>("Photo")
@@ -45,7 +45,7 @@ namespace apiSocialWeb.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("UserName_txt")
                         .HasColumnType("text");
 
                     b.HasKey("CommentId");
@@ -57,7 +57,7 @@ namespace apiSocialWeb.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.CommentLike", b =>
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.PostLike", b =>
                 {
                     b.Property<int>("LikeId")
                         .ValueGeneratedOnAdd()
@@ -77,7 +77,7 @@ namespace apiSocialWeb.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CommentLike");
+                    b.ToTable("PostLike");
                 });
 
             modelBuilder.Entity("apiSocialWeb.Domain.Models.NotificationAggregate.Notification", b =>
@@ -131,13 +131,13 @@ namespace apiSocialWeb.Migrations
                     b.Property<string>("Photo")
                         .HasColumnType("text");
 
-                    b.Property<string>("Post")
+                    b.Property<string>("Post_txt")
                         .HasColumnType("text");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("UserName_txt")
                         .HasColumnType("text");
 
                     b.HasKey("PostId");
@@ -158,7 +158,7 @@ namespace apiSocialWeb.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Name_txt")
                         .HasColumnType("text");
 
                     b.Property<string>("Photo")
@@ -188,7 +188,7 @@ namespace apiSocialWeb.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.CommentLike", b =>
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.PostLike", b =>
                 {
                     b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
                         .WithMany("Likes")

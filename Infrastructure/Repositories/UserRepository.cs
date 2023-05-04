@@ -35,7 +35,7 @@ namespace apiSocialWeb.Infrastructure.Repositories
             if (existingUser != null)
             {
                 // Update the properties of the existing post
-                existingUser.Name = user.Name;
+                existingUser.Name_txt = user.Name_txt;
                 existingUser.Email = user.Email;
                 existingUser.Photo = user.Photo;
 

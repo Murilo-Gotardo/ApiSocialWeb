@@ -4,6 +4,7 @@ using apiSocialWeb.Domain.Models.LikeAggregate;
 using apiSocialWeb.Domain.Models.NotificationAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
+using apiSocialWeb.Domain.Search;
 using apiSocialWeb.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -60,6 +61,8 @@ builder.Services.AddTransient<ICommentRepository, CommentRepository>();
 builder.Services.AddTransient<ILikeRepository, LikeRepository>();
 
 builder.Services.AddTransient<INotificationRepository, NotificationRepository>();
+
+builder.Services.AddTransient<ISearchRepository, SearchRepository>();
 
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
 

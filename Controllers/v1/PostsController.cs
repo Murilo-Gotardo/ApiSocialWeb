@@ -33,7 +33,7 @@ namespace apiSocialWeb.Controllers.v1
 
             var user = _userRepository.Get(postView.UserId);
 
-            var post = new Posts(postView.Photo, postView.UserId, postView.Post, user.Name);
+            var post = new Posts(postView.Post, postView.UserId, postView.Photo, user.Name_txt);
 
             _postRepository.Add(post);
 

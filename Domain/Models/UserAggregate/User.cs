@@ -9,7 +9,7 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
         [Key]
         public int UserId { get; set; }
 
-        public string? Name { get; set; }
+        public string? Name_txt { get; set; }
 
         public string? Email { get; set; }
 
@@ -19,9 +19,11 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
 
         public ICollection<Notification> Notifications { get; set; }
 
+        public User() { }
+
         public User(string name, string email, string photo)
         {
-            Name = name ?? throw new ArgumentException(nameof(name));
+            Name_txt = name ?? throw new ArgumentException(nameof(name));
 
             Email = email ?? throw new ArgumentException(nameof(email));
 

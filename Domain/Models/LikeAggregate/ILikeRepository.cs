@@ -3,7 +3,7 @@
     public interface ILikeRepository
     {
 
-        void Add(CommentLike like);
+        void Add(PostLike like);
 
         int GetRows(int id);
 

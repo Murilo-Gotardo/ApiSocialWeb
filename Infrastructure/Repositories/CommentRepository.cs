@@ -47,7 +47,7 @@ namespace apiSocialWeb.Infrastructure.Repositories
             if (existingComment != null)
             {
                 // Update the properties of the existing comment
-                existingComment.Icomment = comment.Icomment;
+                existingComment.Icomment_txt = comment.Icomment_txt;
 
 
                 _comment.Comment.Update(existingComment);

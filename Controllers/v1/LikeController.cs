@@ -30,7 +30,7 @@ namespace apiSocialWeb.Controllers.v1
         [Route("add")]
         public IActionResult Add([FromBody] LikeViewModel likeView)
         {
-            var like = new CommentLike(likeView.UserId, likeView.PostId);
+            var like = new PostLike(likeView.UserId, likeView.PostId);
 
             _likeRepository.Add(like);
 

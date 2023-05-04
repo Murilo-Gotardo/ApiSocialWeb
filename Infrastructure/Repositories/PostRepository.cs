@@ -47,10 +47,10 @@ namespace apiSocialWeb.Infrastructure.Repositories
             if (existingPost != null)
             {
                 // Update the properties of the existing post
-                if (post.Photo != null && post.Post != null)
+                if (post.Photo != null && post.Post_txt != null)
                 {
                     existingPost.Photo = post.Photo;
-                    existingPost.Post = post.Post;
+                    existingPost.Post_txt = post.Post_txt;
                 }
                 else if (post.CommentCount != null)
                 {
