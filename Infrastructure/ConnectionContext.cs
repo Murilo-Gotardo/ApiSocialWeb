@@ -15,8 +15,12 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<PostLike> PostLike { get; set; } = default!;
         public DbSet<Notification> Notifications { get; set; } = default!;
 
+        //string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(
-                "Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;");
+                "Server=postgresql://postgres:wY3e8oaev6DbYeDyTYDg@containers-us-west-142.railway.app:6449/railway;Database=railway;User Id=postgres;Password=wY3e8oaev6DbYeDyTYDg;");
+
+        //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"
     }
 }
