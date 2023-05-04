@@ -15,7 +15,8 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<PostLike> PostLike { get; set; } = default!;
         public DbSet<Notification> Notifications { get; set; } = default!;
 
-        string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
+        //readonly string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
+        readonly string connectionString = $"Server={Environment.GetEnvironmentVariable("PGHOST")};Port={Environment.GetEnvironmentVariable("PGPORT")};Database={Environment.GetEnvironmentVariable("PGDATABASE")};User Id={Environment.GetEnvironmentVariable("PGUSER")};Password={Environment.GetEnvironmentVariable("PGPASSWORD")};";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(
