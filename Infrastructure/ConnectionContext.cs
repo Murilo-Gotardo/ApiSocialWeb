@@ -16,7 +16,7 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<Notification> Notifications { get; set; } = default!;
 
         
-        readonly string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT");
+        readonly string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT").Replace(" ", "").Trim();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(connectionString);
 
