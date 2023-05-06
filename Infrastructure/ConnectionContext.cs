@@ -16,9 +16,9 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<Notification> Notifications { get; set; } = default!;
 
         //readonly string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
-        readonly string connectionString = "Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;";
+        //readonly string connectionString = "Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(connectionString);
+            => optionsBuilder.UseNpgsql("Server=containers-us-west-142.railway.app;Port=6449;Database=railway;Username=postgres;Password=wY3e8oaev6DbYeDyTYDg;");
 
         //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"
         //"Server=containers-us-west-142.railway.app;Port=6449;Database=railway;Username=postgres;Password=wY3e8oaev6DbYeDyTYDg;"
