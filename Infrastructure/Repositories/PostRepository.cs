@@ -141,9 +141,8 @@ namespace apiSocialWeb.Infrastructure.Repositories
             try
             {
                 var post = await _post.Posts.FirstOrDefaultAsync(p => p.PostId == id) ?? throw new Exception($"Post with ID {id} not found.");
-                _post.Posts.Remove(post);
-
-                await _post.SaveChangesAsync();
+                _post.Posts.RemoveRange(post);
+                var affectedRows = await _post.SaveChangesAsync();
             }
             catch (DbException ex)
             {

@@ -128,13 +128,11 @@ namespace apiSocialWeb.Infrastructure.Repositories
 
             try
             {
-                var post = await _comment.Comment.FirstOrDefaultAsync(c => c.CommentId == id) ?? throw new ResourceNotFoundException(id);
-                var entry = _comment.Comment.Remove(post);
-                await _comment.SaveChangesAsync();
+                var comment = await _comment.Comment.FirstOrDefaultAsync(c => c.CommentId == id) ?? throw new ResourceNotFoundException(id);
+                _comment.Comment.RemoveRange(comment);
+                var affectedRows = await _comment.SaveChangesAsync();
 
-                var affectedRows = entry.State == EntityState.Deleted ? 1 : 0;
-
-                if(affectedRows == 0) 
+                if (affectedRows == 0) 
                     throw new ResourceNotFoundException(id);
             }
             catch (DbException ex) 
