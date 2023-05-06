@@ -15,7 +15,7 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<Like> Like { get; set; } = default!;
         public DbSet<Notification> Notifications { get; set; } = default!;
 
-        readonly string connectionString = "Server=" + Environment.GetEnvironmentVariable("PGHOST") + 
+        readonly string connectionString = "Server=containers-us-west-206.railway.app" + 
             ";Port=" + Environment.GetEnvironmentVariable("PGPORT")
             + ";Database=" + Environment.GetEnvironmentVariable("PGDATABASE")
             + ";User Id=" + Environment.GetEnvironmentVariable("PGUSER")
