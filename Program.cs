@@ -5,6 +5,7 @@ using apiSocialWeb.Domain.Models.NotificationAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using apiSocialWeb.Domain.Search;
+using apiSocialWeb.Infrastructure;
 using apiSocialWeb.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -19,6 +20,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
 
 // Add services to the container.
+
+builder.Services.AddDbContext<ConnectionContext>();
 
 builder.Services.AddControllers();
 
