@@ -2,11 +2,11 @@
 {
     public interface IUserRepository
     {
-        void Add(User user);
+        Task Add(User user);
 
-        List<User> Get(int pageNumber, int pageQuantity);
+        Task<User?> Get(int id);
 
-        User? Get(int id);
+        Task<List<User>> Get(int pageNumber, int pageQuantity);
 
         Task<bool> Put(int id, User user);
 

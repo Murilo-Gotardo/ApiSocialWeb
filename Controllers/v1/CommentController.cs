@@ -30,77 +30,65 @@ namespace apiSocialWeb.Controllers.v1
 
         [HttpPost]
         [Route("add")]
-        public IActionResult Add([FromBody] CommentViewModel commentView)
+        public async Task<IActionResult> Add([FromBody] CommentViewModel commentView)
         {
-
-            var user = _userRepository.Get(commentView.UserId);
+            var user = await _userRepository.Get(commentView.UserId);
 
             var comment = new Comment(commentView.Icomment, commentView.Photo, commentView.PostId, commentView.UserId, user.Name_txt);
 
+            await _commentRepository.Add(comment);
 
-
-            _commentRepository.Add(comment);
-
-
-            int rows = _commentRepository.GetRows(commentView.PostId);
+            int rows = await _commentRepository.GetRows(commentView.PostId);
 
             var post = new Posts(rows);
-            _postRepository.Put(commentView.PostId, post);
+            await _postRepository.Put(commentView.PostId, post);
 
             return Ok();
         }
 
         [HttpGet]
         [Route("get")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
 
             //_logger.Log(LogLevel.Error, "erro");
 
-            var comment = _commentRepository.Get(id);
+            var comment = await _commentRepository.Get(id);
 
             //_logger.LogInformation("teste");
 
             //throw new Exception("erro");
 
 
+            return Ok(comment);
+        }
+
+        [HttpGet]
+        [Route("getpc/{id}")]
+
+        public async Task<IActionResult> Get(int id, int pageNumber, int pageQuantity)
+        {
+            var comment = await _commentRepository.Get(id, pageNumber, pageQuantity);
             return Ok(comment);
         }
 
         [HttpGet]
         [Route("getrow/{id}")]
 
-        public IActionResult GetRows(int id)
+        public async Task<IActionResult> GetRows(int id)
         {
-            var rows = _commentRepository.GetRows(id);
+            var rows = await _commentRepository.GetRows(id);
 
             return Ok(rows);
         }
 
-        [HttpGet]
-        [Route("getpc/{id}")]
-        public IActionResult Get(int id, int pageNumber, int pageQuantity)
-        {
-
-            //_logger.Log(LogLevel.Error, "erro");
-
-            var comment = _commentRepository.GetPostComments(id, pageNumber, pageQuantity);
-
-            //_logger.LogInformation("teste");
-
-            //throw new Exception("erro");
-
-
-            return Ok(comment);
-        }
-
         [HttpPut]
         [Route("put/{id}")]
-        public IActionResult Put(int id, CommentViewModel commentView)
+        public async Task<IActionResult> Put(int id, CommentViewModel commentView)
         {
             var comment = new Comment(commentView.Icomment, commentView.Photo, commentView.PostId, commentView.UserId);
 
-            _commentRepository.Put(id, comment);
+            await _commentRepository.Put(id, comment);
 
             return Ok();
         }
@@ -108,9 +96,9 @@ namespace apiSocialWeb.Controllers.v1
         [HttpDelete]
         [Route("delete/{id}")]
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _commentRepository.Delete(id);
+            await _commentRepository.Delete(id);
 
             return Ok();
         }

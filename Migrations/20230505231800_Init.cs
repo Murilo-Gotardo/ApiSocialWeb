@@ -83,35 +83,7 @@ namespace apiSocialWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notifications",
-                columns: table => new
-                {
-                    NotificationId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NotificationType = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    PostId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Notifications", x => x.NotificationId);
-                    table.ForeignKey(
-                        name: "FK_Notifications_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
-                        principalColumn: "PostId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Notifications_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PostLike",
+                name: "Like",
                 columns: table => new
                 {
                     LikeId = table.Column<int>(type: "integer", nullable: false)
@@ -121,15 +93,42 @@ namespace apiSocialWeb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostLike", x => x.LikeId);
+                    table.PrimaryKey("PK_Like", x => x.LikeId);
                     table.ForeignKey(
-                        name: "FK_PostLike_Posts_PostId",
+                        name: "FK_Like_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PostLike_User_UserId",
+                        name: "FK_Like_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    NotificationId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NotificationType = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    PostId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.NotificationId);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "PostId");
+                    table.ForeignKey(
+                        name: "FK_Notifications_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
@@ -147,6 +146,16 @@ namespace apiSocialWeb.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Like_PostId",
+                table: "Like",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Like_UserId",
+                table: "Like",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notifications_PostId",
                 table: "Notifications",
                 column: "PostId");
@@ -154,16 +163,6 @@ namespace apiSocialWeb.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_UserId",
                 table: "Notifications",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostLike_PostId",
-                table: "PostLike",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostLike_UserId",
-                table: "PostLike",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -179,10 +178,10 @@ namespace apiSocialWeb.Migrations
                 name: "Comment");
 
             migrationBuilder.DropTable(
-                name: "Notifications");
+                name: "Like");
 
             migrationBuilder.DropTable(
-                name: "PostLike");
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "Posts");

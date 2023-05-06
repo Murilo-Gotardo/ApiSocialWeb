@@ -1,72 +1,146 @@
 ﻿using apiSocialWeb.Domain.Models.CommentAggregate;
+using apiSocialWeb.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace apiSocialWeb.Infrastructure.Repositories
 {
     public class CommentRepository : ICommentRepository
     {
+        private readonly ConnectionContext _comment = new();
 
-        private readonly ConnectionContext _comment = new ConnectionContext();
-        public void Add(Comment comment)
+        public async Task Add(Comment comment)
         {
-            _comment.Comment.Add(comment);
-            _comment.SaveChanges();
+            if (comment == null)
+                throw new ArgumentNullException(nameof(comment), "O comentário não pode ser vazio");
+
+            try
+            {
+                await _comment.Comment.AddAsync(comment);
+                await _comment.SaveChangesAsync();
+            }
+            catch (DbException ex)
+            {
+                throw new DbUpdateException("Erro ao adicionar o comentário", ex);
+            }
         }
 
-        public List<Comment> GetPostComments(int id, int pageNumber, int pageQuantity)
+        public async Task<Comment?> Get(int id)
         {
-            return _comment.Comment
-            .Where(c => c.PostId == id)
-            .OrderByDescending(c => c.CreatedDate)
-            .Skip((pageNumber - 1) * pageQuantity)
-            .Take(pageQuantity)
-            .ToList();
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "O ID do comentário não pode ser menor ou igual a zero");
+
+            try
+            {
+                return await _comment.Comment.FindAsync(id) ?? throw new ResourceNotFoundException(id);
+            }
+            catch (DbException ex)
+            {
+                throw new DbUpdateException($"A pesquisa não retornou dados para o comnetário de ID {id}", ex);
+            }
+
         }
 
-        public int GetRows(int id)
+        public async Task<List<Comment>> Get(int postId, int pageNumber, int pageQuantity)
         {
-            List<Comment> comment = _comment.Comment
-            .Where(p => p.PostId == id)
-            .ToList();
+            if (postId <= 0)
+                throw new ArgumentOutOfRangeException(nameof(postId), "O ID da postagem não pode ser menor ou igual a zero");
 
-            int count = comment.Count; // Obtem o número de linhas
+            if (pageNumber <= 0)
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), "O número da página não pode ser menor ou igual a zero");
 
-            return count;
+            if (pageQuantity <= 0)
+                throw new ArgumentOutOfRangeException(nameof(pageQuantity), "A quantidade de itens por página não pode ser menor ou igual a zero");
+
+            try
+            {
+                return await _comment.Comment
+                    .Where(c => c.PostId == postId)
+                    .OrderByDescending(c => c.CreatedDate)
+                    .Skip((pageNumber - 1) * pageQuantity)
+                    .Take(pageQuantity)
+                    .ToListAsync() ?? throw new ResourceNotFoundException(postId);
+            }
+            catch (DbException ex)
+            {
+                throw new DbUpdateException($"Erro ao buscar commentários com o contexto de post, de ID {postId}", ex);
+            }
         }
 
-
-        public Comment? Get(int id)
+        public async Task<int> GetRows(int id)
         {
-            return _comment.Comment.Find(id);
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "O ID não pode ser menor ou igual a zero");
+
+            try
+            {
+                List<Comment> comment = await _comment.Comment
+                .Where(p => p.PostId == id)
+                .ToListAsync() ?? throw new ResourceNotFoundException(id);
+
+                int count = comment.Count; // Obtem o número de linhas
+
+                return count;
+
+            }
+            catch (DbException ex)
+            {
+                throw new DbUpdateException("Erro ao pegar a quantidade de comentários", ex);
+            }
         }
 
         public async Task<bool> Put(int id, Comment comment)
         {
-            var existingComment = await _comment.Comment.FirstOrDefaultAsync(c => c.CommentId == id);
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "O ID do comentário não pode ser menor ou igual a zero");
 
-            if (existingComment != null)
+            try
             {
-                // Update the properties of the existing comment
-                existingComment.Icomment_txt = comment.Icomment_txt;
+                var existingComment = await _comment.Comment.FirstOrDefaultAsync(c => c.CommentId == id) ?? throw new ResourceNotFoundException(id);
 
+                if (existingComment != null)
+                {
+                    existingComment.Icomment_txt = comment.Icomment_txt;
 
-                _comment.Comment.Update(existingComment);
-                await _comment.SaveChangesAsync();
+                    var entry = _comment.Comment.Update(existingComment);
+                    await _comment.SaveChangesAsync();
 
-                return true;
-            }
+                    var affectedRows = entry.State == EntityState.Modified ? 1 : 0;
 
-            return false;
+                    if (affectedRows == 0)
+                        throw new ResourceNotFoundException(id);
+
+                    return true;
+                }
+
+                return false;
+            } 
+            catch (DbException ex) 
+            {
+                throw new DbUpdateException($"A atualização do comentário, de ID {id}, falhou", ex);
+            }            
         }
 
-        public async Task Delete(int commentId)
+        public async Task Delete(int id)
         {
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "O ID do comentário não pode ser menor ou igual a zero");
 
-            var post = await _comment.Comment.FirstOrDefaultAsync(c => c.CommentId == commentId) ?? throw new Exception($"Comment with ID {commentId} not found.");
-            _comment.Comment.Remove(post);
+            try
+            {
+                var post = await _comment.Comment.FirstOrDefaultAsync(c => c.CommentId == id) ?? throw new ResourceNotFoundException(id);
+                var entry = _comment.Comment.Remove(post);
+                await _comment.SaveChangesAsync();
 
-            await _comment.SaveChangesAsync();
+                var affectedRows = entry.State == EntityState.Deleted ? 1 : 0;
 
+                if(affectedRows == 0) 
+                    throw new ResourceNotFoundException(id);
+            }
+            catch (DbException ex) 
+            {
+                throw new DbUpdateException($"A exclusão do comentário, de ID {id}, falhou", ex);
+            }
         }
     }
 }

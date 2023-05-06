@@ -24,17 +24,14 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
         public int UserId { get; set; }
 
-        public User User { get; set; }
+        public User? User { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
 
-        public ICollection<PostLike> Likes { get; set; }
+        public ICollection<Like>? Likes { get; set; }
         
 
-        public Posts()
-        {
-
-        }
+        public Posts() { }
 
         public Posts(int? commentCount = null, int likeCount = 0) 
         {
@@ -42,14 +39,14 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
             LikeCount = likeCount;
         }
 
-        public Posts(string post, int userId, string? photo = null, string? userName = null)
+        public Posts(string? post, int userId, string? photo = null, string? userName = null)
         {
 
-            Post_txt = post ?? throw new ArgumentException(nameof(post));
+            Post_txt = post ?? throw new ArgumentException(null, nameof(post));
 
-            Photo = photo ?? throw new ArgumentException(nameof(photo));
+            Photo = photo ?? throw new ArgumentException(null, nameof(photo));
 
-            UserName_txt = userName ?? throw new ArgumentException(nameof(userName));
+            UserName_txt = userName ?? throw new ArgumentException(null, nameof(userName));
 
             var date = DateTime.Now.ToString("dd/MM/yyyy");
 

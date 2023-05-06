@@ -1,37 +1,69 @@
 ﻿using apiSocialWeb.Domain.Models.LikeAggregate;
+using apiSocialWeb.Domain.Models.PostsAggregate;
+using apiSocialWeb.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace apiSocialWeb.Infrastructure.Repositories
 {
     public class LikeRepository : ILikeRepository
     {
-        private readonly ConnectionContext _like = new ConnectionContext();
-        public void Add(PostLike like)
+        private readonly ConnectionContext _like = new();
+
+        public async Task Add(Like like)
         {
-            _like.PostLike.Add(like);
-            _like.SaveChanges();
+            try
+            {
+                await _like.Like.AddAsync(like);
+                await _like.SaveChangesAsync();
+            }
+            catch (DbException ex) 
+            {
+                throw new DbUpdateException("Erro ao adicionar o like", ex);
+            }
         }
 
-
-        public int GetRows(int id)
+        public async Task<int> GetRows(int id)
         {
-            List<PostLike> likes = _like.PostLike
-            .Where(p => p.PostId == id)
-            .ToList();
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "O ID não pode ser menor ou igual a zero");
 
-            int count = likes.Count; // Obtem o número de linhas
+            try
+            {
+                List<Like> likes = await _like.Like
+                .Where(p => p.PostId == id)
+                .ToListAsync() ?? throw new ResourceNotFoundException(id);
 
-            return count;
+                int count = likes.Count; // Obtem o número de linhas
+
+                return count;
+            }
+            catch (DbException ex)
+            {
+                throw new DbUpdateException("Erro ao pegar a quantidade de likes", ex);
+            }
         }
 
-        public async Task Delete(int likeId)
+        public async Task Delete(int id)
         {
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "O ID não pode ser menor ou igual a zero");
 
-            var like = await _like.PostLike.FirstOrDefaultAsync(l => l.LikeId == likeId) ?? throw new Exception($"Comment with ID {likeId} not found.");
-            _like.PostLike.Remove(like);
+            try
+            {
+                var like = await _like.Like.FirstOrDefaultAsync(l => l.LikeId == id);
+                var entry = _like.Like.Remove(like);
+                await _like.SaveChangesAsync();
+                var affectedRows = entry.State == EntityState.Deleted ? 1 : 0;
 
-            await _like.SaveChangesAsync();
+                if (affectedRows == 0)
+                    throw new ResourceNotFoundException(id);
 
+            }
+            catch (DbException ex)
+            {
+                throw new DbUpdateException($"A exclusão do like, de ID {id}, falhou", ex);
+            }
         }
     }
 }

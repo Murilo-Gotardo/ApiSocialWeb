@@ -10,16 +10,12 @@ namespace apiSocialWeb.Controllers.v1
     [ApiVersion("1.0")]
     public class SearchController : ControllerBase
     {
-
         private readonly ISearchRepository _searchRepository;
-
 
         public SearchController(ISearchRepository searchRepository)
         {
             _searchRepository = searchRepository ?? throw new ArgumentNullException(nameof(searchRepository));
-            
         }
-
 
         [HttpGet]
         [Route("search/{key}")]
@@ -28,7 +24,6 @@ namespace apiSocialWeb.Controllers.v1
             var search = _searchRepository.Search(key);
          
             return Ok(search);
-
         }
     }
 }

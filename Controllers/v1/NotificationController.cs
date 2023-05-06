@@ -23,23 +23,23 @@ namespace apiSocialWeb.Controllers.v1
 
         [HttpPost]
         [Route("add")]
-        public IActionResult Add([FromBody] NotificationViewModel notifyView)
+        public async Task<IActionResult> Add([FromBody] NotificationViewModel notifyView)
         {
             var notify = new Notification(notifyView.NotificationType, notifyView.Status, notifyView.PostId, notifyView.UserId);
 
-            _notifyRepository.Add(notify);
+            await _notifyRepository.Add(notify);
 
             return Ok();
         }
 
         [HttpGet]
         [Route("get/{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
 
             //_logger.Log(LogLevel.Error, "erro");
 
-            var notify = _notifyRepository.Get(id);
+            var notify = await _notifyRepository.Get(id);
 
             //_logger.LogInformation("teste");
 
@@ -53,10 +53,9 @@ namespace apiSocialWeb.Controllers.v1
         [HttpDelete]
         [Route("delete/{id}")]
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _notifyRepository.Delete(id);
-
+            await _notifyRepository.Delete(id);
             return Ok();
         }
     }

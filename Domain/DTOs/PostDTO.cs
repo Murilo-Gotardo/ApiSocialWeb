@@ -1,5 +1,4 @@
 ﻿using apiSocialWeb.Domain.Models.CommentAggregate;
-using static apiSocialWeb.Domain.Models.PostsAggregate.Posts;
 
 namespace apiSocialWeb.Domain.DTOs
 {

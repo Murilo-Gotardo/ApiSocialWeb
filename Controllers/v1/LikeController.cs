@@ -28,28 +28,28 @@ namespace apiSocialWeb.Controllers.v1
 
         [HttpPost]
         [Route("add")]
-        public IActionResult Add([FromBody] LikeViewModel likeView)
+        public async Task<IActionResult> Add([FromBody] LikeViewModel likeView)
         {
-            var like = new PostLike(likeView.UserId, likeView.PostId);
+            var like = new Like(likeView.UserId, likeView.PostId);
 
-            _likeRepository.Add(like);
+            await _likeRepository.Add(like);
 
-            int rows = _likeRepository.GetRows(likeView.PostId);
+            int rows = await _likeRepository.GetRows(likeView.PostId);
 
             var post = new Posts(null, rows);
-            _postRepository.Put(likeView.PostId, post);
+            await _postRepository.Put(likeView.PostId, post);
 
             return Ok();
         }
 
         [HttpGet]
         [Route("get/{id}")]
-        public IActionResult GetRows(int id)
+        public async Task<IActionResult> GetRows(int id)
         {
 
             //_logger.Log(LogLevel.Error, "erro");
 
-            var like = _likeRepository.GetRows(id);
+            var like = await _likeRepository.GetRows(id);
 
             //_logger.LogInformation("teste");
 
@@ -63,9 +63,9 @@ namespace apiSocialWeb.Controllers.v1
         [HttpDelete]
         [Route("delete/{id}")]
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _likeRepository.Delete(id);
+            await _likeRepository.Delete(id);
 
             return Ok();
         }

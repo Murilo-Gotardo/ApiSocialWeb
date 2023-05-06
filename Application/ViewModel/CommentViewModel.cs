@@ -3,9 +3,9 @@
     public class CommentViewModel
     {
 
-        public string Icomment { get; set; }
+        public string? Icomment { get; set; }
 
-        public string Photo { get; set; }
+        public string? Photo { get; set; }
 
         public int UserId { get; set; }
 

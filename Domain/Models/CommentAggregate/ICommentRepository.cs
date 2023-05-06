@@ -4,13 +4,13 @@ namespace apiSocialWeb.Domain.Models.CommentAggregate
     public interface ICommentRepository
     {
 
-        void Add(Comment comment);
+        Task Add(Comment comment);
 
-        List<Comment> GetPostComments(int id, int pageNumber, int pageQuantity);
+        Task<Comment?> Get(int id);
 
-        int GetRows(int id);
+        Task<List<Comment>> Get(int id, int pageNumber, int pageQuantity);
 
-        Comment? Get(int id);
+        Task<int> GetRows(int id);
 
         Task<bool> Put(int id, Comment comment);
 

@@ -2,10 +2,9 @@
 {
     public interface INotificationRepository
     {
+        Task Add(Notification notify);
 
-        void Add(Notification notify);
-
-        List<Notification>? Get(int id);
+        Task<List<Notification>> Get(int id);
 
         Task Delete(int id);
 

@@ -2,10 +2,9 @@
 {
     public interface ILikeRepository
     {
+        Task Add(Like like);
 
-        void Add(PostLike like);
-
-        int GetRows(int id);
+        Task<int> GetRows(int id);
 
         Task Delete(int id);
     }

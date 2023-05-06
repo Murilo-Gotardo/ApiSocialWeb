@@ -15,21 +15,21 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
 
         public string? Photo { get; set; }
 
-        public ICollection<Posts> Posts { get; set; }
+        public ICollection<Posts>? Posts { get; set; }
 
-        public ICollection<Notification> Notifications { get; set; }
+        public ICollection<Notification>? Notifications { get; set; }
 
         public User() { }
 
-        public User(string name, string email, string photo)
+        public User(string? name, string? email, string? photo)
         {
-            Name_txt = name ?? throw new ArgumentException(nameof(name));
+            Name_txt = name ?? throw new ArgumentException(null, nameof(name));
 
-            Email = email ?? throw new ArgumentException(nameof(email));
+            Email = email ?? throw new ArgumentException(null, nameof(email));
 
-            Photo = photo ?? throw new ArgumentException(nameof(photo));
+            Photo = photo ?? throw new ArgumentException(null, nameof(photo));
 
-            //Notifications = notifications ?? throw new ArgumentException(nameof(notifications)); ;
+            //Notifications = notifications ?? throw new ArgumentException(nameof(notifications));
 
             //Like = like ?? throw new ArgumentException(nameof(Like));
         }

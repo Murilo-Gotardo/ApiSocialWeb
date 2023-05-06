@@ -12,7 +12,7 @@ using apiSocialWeb.Infrastructure;
 namespace apiSocialWeb.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20230402191304_Init")]
+    [Migration("20230505231800_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -60,7 +60,7 @@ namespace apiSocialWeb.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.PostLike", b =>
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.Like", b =>
                 {
                     b.Property<int>("LikeId")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace apiSocialWeb.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PostLike");
+                    b.ToTable("Like");
                 });
 
             modelBuilder.Entity("apiSocialWeb.Domain.Models.NotificationAggregate.Notification", b =>
@@ -92,14 +92,12 @@ namespace apiSocialWeb.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NotificationId"));
 
                     b.Property<string>("NotificationType")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PostId")
+                    b.Property<int?>("PostId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("UserId")
@@ -191,7 +189,7 @@ namespace apiSocialWeb.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.PostLike", b =>
+            modelBuilder.Entity("apiSocialWeb.Domain.Models.LikeAggregate.Like", b =>
                 {
                     b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
                         .WithMany("Likes")
@@ -214,9 +212,7 @@ namespace apiSocialWeb.Migrations
                 {
                     b.HasOne("apiSocialWeb.Domain.Models.PostsAggregate.Posts", "Post")
                         .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PostId");
 
                     b.HasOne("apiSocialWeb.Domain.Models.UserAggregate.User", "User")
                         .WithMany("Notifications")

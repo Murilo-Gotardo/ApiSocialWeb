@@ -1,5 +1,4 @@
 ﻿using apiSocialWeb.Application.ViewModel;
-using apiSocialWeb.Domain.DTOs;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -26,23 +25,23 @@ namespace apiSocialWeb.Controllers.v1
 
         [HttpPost]
         [Route("add")]
-        public IActionResult Add([FromBody] UserViewModel userView)
+        public async Task<IActionResult> Add([FromBody] UserViewModel userView)
         {
             var user = new User(userView.Name, userView.Email, userView.Photo);
 
-            _userRepository.Add(user);
+            await _userRepository.Add(user);
 
             return Ok();
         }
 
         [HttpGet]
         [Route("get")]
-        public IActionResult Get(int pageNumber, int pageQuantity)
+        public async Task<IActionResult> Get(int pageNumber, int pageQuantity)
         {
 
             //_logger.Log(LogLevel.Error, "erro");
 
-            var user = _userRepository.Get(pageNumber, pageQuantity);
+            var user = await _userRepository.Get(pageNumber, pageQuantity);
 
             //_logger.LogInformation("teste");
 
@@ -54,20 +53,20 @@ namespace apiSocialWeb.Controllers.v1
      
         [HttpGet]
         [Route("search/{id}")]
-        public IActionResult Search(int id)
+        public async Task<IActionResult> Search(int id)
         {
-            var user = _userRepository.Get(id);
+            var user = await _userRepository.Get(id);
 
             return Ok(user);
         }
 
         [HttpPut]
         [Route("put/{id}")]
-        public IActionResult Put(int id, UserViewModel userView)
+        public async Task<IActionResult> Put(int id, UserViewModel userView)
         {
             var user = new User(userView.Name, userView.Email, userView.Photo);
 
-            _userRepository.Put(id, user);
+            await _userRepository.Put(id, user);
 
             return Ok();
         }
@@ -75,9 +74,9 @@ namespace apiSocialWeb.Controllers.v1
         [HttpDelete]
         [Route("delete/{id}")]
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _userRepository.Delete(id);
+            await _userRepository.Delete(id);
 
             return Ok();
         }

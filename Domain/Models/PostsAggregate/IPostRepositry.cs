@@ -1,17 +1,14 @@
-﻿using apiSocialWeb.Domain.DTOs;
-using apiSocialWeb.Domain.Models.CommentAggregate;
-
-namespace apiSocialWeb.Domain.Models.PostsAggregate
+﻿namespace apiSocialWeb.Domain.Models.PostsAggregate
 {
     public interface IPostRepository
     {
-        void Add(Posts post);
+        Task Add(Posts post);
 
-        List<Posts> Get(int pageNumber, int pageQuantity);
+        Task<Posts> Get(int id);
 
-        List<Posts> GetUserPost(int userId, int pageNumber, int pageQuantity);
+        Task<List<Posts>> Get(int pageNumber, int pageQuantity);
 
-        Posts? Get(int id);
+        Task<List<Posts>> Get(int userId, int pageNumber, int pageQuantity);
 
         Task<bool> Put(int id, Posts post);
 

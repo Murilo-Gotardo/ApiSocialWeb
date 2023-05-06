@@ -28,38 +28,36 @@ namespace apiSocialWeb.Controllers.v1
 
         [HttpPost]
         [Route("add")]
-        public IActionResult Add([FromBody] PostsViewModel postView)
+        public async Task<IActionResult> Add([FromBody] PostsViewModel postView)
         {
-
-            var user = _userRepository.Get(postView.UserId);
+            var user = await _userRepository.Get(postView.UserId);
 
             var post = new Posts(postView.Post, postView.UserId, postView.Photo, user.Name_txt);
 
-            _postRepository.Add(post);
+            await _postRepository.Add(post);
 
             return Ok();
         }
 
-     
         [HttpPost]
         [Route("download/{id}")]
-        public IActionResult DownloadPhoto(int id)
+        public async Task<IActionResult> DownloadPhoto(int id)
         {
-            var post = _postRepository.Get(id);
+            var post = await _postRepository.Get(id);
 
             var dataBytes = System.IO.File.ReadAllBytes(post.Photo);
 
             return File(dataBytes, "image/png");
         }
-       
+
         [HttpGet]
         [Route("get")]
-        public IActionResult Get(int pageNumber, int pageQuantity)
+        public async Task<IActionResult> Get(int pageNumber, int pageQuantity)
         {
 
             //_logger.Log(LogLevel.Error, "erro");
 
-            var post = _postRepository.Get(pageNumber, pageQuantity);
+            var post = await _postRepository.Get(pageNumber, pageQuantity);
 
             //_logger.LogInformation("teste");
 
@@ -71,31 +69,29 @@ namespace apiSocialWeb.Controllers.v1
 
         [HttpGet]
         [Route("getuserpost/{id}")]
-        public IActionResult Get(int id, int pageNumber, int pageQuantity)
+        public async Task<IActionResult> Get(int id, int pageNumber, int pageQuantity)
         {
-            var userPosts = _postRepository.GetUserPost(id, pageNumber, pageQuantity);
+            var userPosts = await _postRepository.Get(id, pageNumber, pageQuantity);
 
             return Ok(userPosts);
         }
 
         [HttpGet]
         [Route("search/{id}")]
-        public IActionResult Search(int id)
+        public async Task<IActionResult> Search(int id)
         {
-            var post = _postRepository.Get(id);
-
+            var post = await _postRepository.Get(id);
             var postDTOS = _mapper.Map<PostDTO>(post);
-
             return Ok(postDTOS);
         }
 
         [HttpPut]
         [Route("put/{id}")]
-        public IActionResult Put(int id, PostsViewModel postView) 
+        public async Task<IActionResult> Put(int id, PostsViewModel postView) 
         {
             var post = new Posts(postView.Post, postView.UserId, postView.Photo);
 
-            _postRepository.Put(id, post);
+            await _postRepository.Put(id, post);
 
             return Ok();
         }
@@ -103,9 +99,9 @@ namespace apiSocialWeb.Controllers.v1
         [HttpDelete]
         [Route("delete/{id}")]
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _postRepository.Delete(id);
+            await _postRepository.Delete(id);
 
             return Ok();
         }
