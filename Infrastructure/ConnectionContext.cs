@@ -15,11 +15,13 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<Like> Like { get; set; } = default!;
         public DbSet<Notification> Notifications { get; set; } = default!;
 
-        
-        readonly string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT").Replace(" ", "").Trim();
+        private readonly string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT").Replace(" ", "");
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(connectionString);
 
         //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"
+
+        public ConnectionContext() { }
     }
 }
