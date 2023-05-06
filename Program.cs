@@ -21,6 +21,8 @@ builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PO
 
 // Add services to the container.
 
+using var context = new ConnectionContext(Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT"));
+
 builder.Services.AddDbContext<ConnectionContext>();
 
 builder.Services.AddControllers();
