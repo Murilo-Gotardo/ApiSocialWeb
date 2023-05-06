@@ -22,10 +22,12 @@ namespace apiSocialWeb.Infrastructure.Repositories
             try
             {
                 var query = from p in _search.Posts
-                            join u in _search.User on p.UserId equals u.UserId
-                            join c in _search.Comment on p.PostId equals c.PostId
-                            where p.Post_txt.Contains(key) || p.UserName_txt.Contains(key) || u.Name_txt.Contains(key) || c.Icomment_txt.Contains(key) || c.UserName_txt.Contains(key)
-                            select new { Post = p, User = u, Comment = c };
+                            join u in _search.User on p.UserId equals u.UserId into postUserJoin
+                            from pu in postUserJoin.DefaultIfEmpty()
+                            join c in _search.Comment on p.PostId equals c.PostId into postCommentJoin
+                            from pc in postCommentJoin.DefaultIfEmpty()
+                            where p.Post_txt.Contains(key) || p.UserName_txt.Contains(key) || pu.Name_txt.Contains(key) || pc.Icomment_txt.Contains(key) || pc.UserName_txt.Contains(key)
+                            select new { Post = p, User = pu, Comment = pc };
 
                 var results = query.ToList();
 
@@ -59,7 +61,7 @@ namespace apiSocialWeb.Infrastructure.Repositories
             }
             catch (DbException ex)
             {
-                throw new SearchEmptyException($"A pesquisa não retornou nenhum registro, chave usada: {key}", ex);
+                throw new SearchEmptyException($"A pesquisa falhou, chave usada: {key}", ex);
             }
         }
     }

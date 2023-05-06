@@ -1,6 +1,7 @@
 ﻿using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace apiSocialWeb.Domain.Models.LikeAggregate
 {
@@ -12,10 +13,13 @@ namespace apiSocialWeb.Domain.Models.LikeAggregate
 
         public int UserId { get; set; }
 
+        [JsonIgnore]
         public User? User { get; set; }
 
+        [JsonIgnore]
         public int PostId { get; set; }
 
+        [JsonIgnore]
         public Posts? Post { get; set; }
 
 

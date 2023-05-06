@@ -2,6 +2,7 @@
 using apiSocialWeb.Domain.Models.LikeAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace apiSocialWeb.Domain.Models.PostsAggregate
 {
@@ -24,10 +25,13 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
         public int UserId { get; set; }
 
+        [JsonIgnore]
         public User? User { get; set; }
 
+        [JsonIgnore]
         public ICollection<Comment>? Comments { get; set; }
 
+        [JsonIgnore]
         public ICollection<Like>? Likes { get; set; }
         
 
@@ -46,7 +50,7 @@ namespace apiSocialWeb.Domain.Models.PostsAggregate
 
             Photo = photo ?? throw new ArgumentException(null, nameof(photo));
 
-            UserName_txt = userName ?? throw new ArgumentException(null, nameof(userName));
+            UserName_txt = userName;
 
             var date = DateTime.Now.ToString("dd/MM/yyyy");
 
