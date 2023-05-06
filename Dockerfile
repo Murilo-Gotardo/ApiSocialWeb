@@ -13,6 +13,8 @@ COPY . .
 WORKDIR "/src/."
 RUN dotnet build "apiSocialWeb.csproj" -c Release -o /app/build
 
+ENV DATABASE_CONNECTION_STRING=${DATABASE_CONNECTION_STRING_DEVELOPMENT}
+
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 RUN echo 'export PATH="$PATH:/root/.dotnet/tools"' >> ~/.bashrc
@@ -20,8 +22,6 @@ RUN dotnet-ef database update
 
 FROM build AS publish
 RUN dotnet publish "apiSocialWeb.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-ENV DATABASE_CONNECTION_STRING=${DATABASE_CONNECTION_STRING_DEVELOPMENT}
 
 FROM base AS final
 WORKDIR /app
