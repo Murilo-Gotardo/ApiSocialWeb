@@ -24,6 +24,8 @@ namespace apiSocialWeb.Infrastructure
 
         //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"
 
+        public ConnectionContext() { }
+
         public ConnectionContext(string? connectionString) 
         {
             ConnectionString = connectionString;
