@@ -1,4 +1,5 @@
-﻿using apiSocialWeb.Domain.Models.LikeAggregate;
+﻿using apiSocialWeb.Domain.Models.CommentAggregate;
+using apiSocialWeb.Domain.Models.LikeAggregate;
 using apiSocialWeb.Domain.Models.NotificationAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Exceptions;
@@ -51,10 +52,8 @@ namespace apiSocialWeb.Infrastructure.Repositories
             {
                 var notify = await _notify.Notifications.FirstOrDefaultAsync(n => n.NotificationId == id) ?? throw new ResourceNotFoundException(id);
 
-                //Se a remoção for bem-sucedida, o número de linhas afetadas é igual a 1. Se for 0, é lançada uma exceção ResourceNotFoundException
-                var entry = _notify.Notifications.Remove(notify);
-                await _notify.SaveChangesAsync();
-                var affectedRows = entry.State == EntityState.Deleted ? 1 : 0;
+                _notify.Notifications.RemoveRange(notify);
+                var affectedRows = await _notify.SaveChangesAsync();
 
                 if (affectedRows == 0)
                     throw new ResourceNotFoundException(id);

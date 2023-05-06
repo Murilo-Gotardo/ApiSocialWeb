@@ -1,4 +1,5 @@
-﻿using apiSocialWeb.Domain.Models.LikeAggregate;
+﻿using apiSocialWeb.Domain.Models.CommentAggregate;
+using apiSocialWeb.Domain.Models.LikeAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -52,9 +53,8 @@ namespace apiSocialWeb.Infrastructure.Repositories
             try
             {
                 var like = await _like.Like.FirstOrDefaultAsync(l => l.LikeId == id);
-                var entry = _like.Like.Remove(like);
-                await _like.SaveChangesAsync();
-                var affectedRows = entry.State == EntityState.Deleted ? 1 : 0;
+                _like.Like.RemoveRange(like);
+                var affectedRows = await _like.SaveChangesAsync();
 
                 if (affectedRows == 0)
                     throw new ResourceNotFoundException(id);

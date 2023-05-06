@@ -1,4 +1,5 @@
-﻿using apiSocialWeb.Domain.Models.UserAggregate;
+﻿using apiSocialWeb.Domain.Models.CommentAggregate;
+using apiSocialWeb.Domain.Models.UserAggregate;
 using apiSocialWeb.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
@@ -103,10 +104,8 @@ namespace apiSocialWeb.Infrastructure.Repositories
             try
             {
                 var user = await _user.User.FirstOrDefaultAsync(u => u.UserId == id) ?? throw new ResourceNotFoundException(id);
-                var entry = _user.User.Remove(user);
-                await _user.SaveChangesAsync();
-
-                var affectedRows = entry.State == EntityState.Modified ? 1 : 0;
+                _user.User.RemoveRange(user);
+                var affectedRows = await _user.SaveChangesAsync();
 
                 if (affectedRows == 0)
                     throw new ResourceNotFoundException(id);
