@@ -21,6 +21,8 @@ RUN dotnet-ef database update
 FROM build AS publish
 RUN dotnet publish "apiSocialWeb.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
+ENV DATABASE_CONNECTION_STRING=${DATABASE_CONNECTION_STRING_DEVELOPMENT}
+
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .

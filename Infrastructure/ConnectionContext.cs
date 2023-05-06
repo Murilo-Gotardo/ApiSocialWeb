@@ -18,7 +18,7 @@ namespace apiSocialWeb.Infrastructure
         //private readonly string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT").Replace(" ", "");
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT").ToString());
+            => optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING"));
 
         //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"
 
