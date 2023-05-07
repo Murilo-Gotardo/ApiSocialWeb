@@ -23,7 +23,7 @@ namespace apiSocialWeb.Infrastructure
         {
             if (connectionString != null)
             {
-                optionsBuilder.UseNpgsql("Server=containers-us-west-138.railway.app;Port=7774;Database=railway;Username=postgres;Password=ElRrXNyok6t7i1Ki7kJy;"));
+                optionsBuilder.UseNpgsql("Server=containers-us-west-138.railway.app;Port=7774;Database=railway;Username=postgres;Password=ElRrXNyok6t7i1Ki7kJy;");
             }
             else
             {
