@@ -1,6 +1,7 @@
 ﻿using apiSocialWeb.Domain.Models.NotificationAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace apiSocialWeb.Domain.Models.UserAggregate
 {
@@ -15,8 +16,10 @@ namespace apiSocialWeb.Domain.Models.UserAggregate
 
         public string? Photo { get; set; }
 
+        [JsonIgnore]
         public ICollection<Posts>? Posts { get; set; }
 
+        [JsonIgnore]
         public ICollection<Notification>? Notifications { get; set; }
 
         public User() { }

@@ -1,6 +1,7 @@
 ﻿using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace apiSocialWeb.Domain.Models.CommentAggregate
 {
@@ -19,10 +20,12 @@ namespace apiSocialWeb.Domain.Models.CommentAggregate
 
         public int UserId { get; set; }
 
+        [JsonIgnore]
         public User? User { get; set; }
 
         public int PostId { get; set; }
 
+        [JsonIgnore]
         public Posts? Post { get; set; }
 
 

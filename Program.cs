@@ -1,3 +1,4 @@
+using apiSocialWeb;
 using apiSocialWeb.Application.Mapping;
 using apiSocialWeb.Domain.Models.CommentAggregate;
 using apiSocialWeb.Domain.Models.LikeAggregate;
@@ -9,6 +10,7 @@ using apiSocialWeb.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApi.Application.Swagger;
 
@@ -20,12 +22,17 @@ builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PO
 
 // Add services to the container.
 
+builder.Services.AddDataProtection();
+
+// Build the service provider
+
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(DomainToDTOsMapping));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 
 builder.Services.AddApiVersioning(o =>
 {
