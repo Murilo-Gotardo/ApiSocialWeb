@@ -3,7 +3,9 @@ using apiSocialWeb.Domain.Models.LikeAggregate;
 using apiSocialWeb.Domain.Models.NotificationAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
+using Glimpse;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace apiSocialWeb.Infrastructure
 {
@@ -18,16 +20,22 @@ namespace apiSocialWeb.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            string path = Path.GetFullPath("appsettings.json");
-            AppSettingsEncryptionHelper.DecryptAppSettings(path);
+            string filePath = Path.GetFullPath("appsettings.json");
 
-            string connectionString = AppSettingsEncryptionHelper.GetConnectionString(path);
+            string file = File.ReadAllText(filePath);
 
+            var settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented
+            };
+
+            dynamic jsonObject = JsonConvert.DeserializeObject<dynamic>(file, settings);
+
+            string connectionString = jsonObject.ConnectionString.Connection;
+                   
             if (connectionString != null)
             {
                 optionsBuilder.UseNpgsql(connectionString);
-
-                AppSettingsEncryptionHelper.EncryptAppSettings(path);
             }
             else
             {
@@ -36,6 +44,8 @@ namespace apiSocialWeb.Infrastructure
         }
 
         //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"
+
+        //Server=containers-us-west-138.railway.app;Port=7774;Database=railway;Username=postgres;Password=ElRrXNyok6t7i1Ki7kJy;
 
         public ConnectionContext() { }
     }

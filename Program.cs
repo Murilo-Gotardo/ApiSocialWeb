@@ -13,8 +13,6 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApi.Application.Swagger;
 
-AppSettingsEncryptionHelper.DecryptAppSettings("appsettings.json");
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Listen on port provided by Railway
@@ -108,7 +106,5 @@ app.UseCors("MyPolicy");
 app.UseHttpsRedirection();
 
 app.MapControllers();
-
-AppSettingsEncryptionHelper.EncryptAppSettings("appsettings.json");
 
 app.Run();
