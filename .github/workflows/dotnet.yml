@@ -19,14 +19,12 @@ jobs:
         - name: Setup .NET
           uses: actions/setup-dotnet@v3
           with:
-            dotnet-version: 7.0.x
-            
-        - name: Setup environment variables
-          env:
-            DATABASE_CONECTION_STRING: ${{secrets.DATABASE_CONECTION_STRING}}
+            dotnet-version: 7.0.x          
             
         - name: Restore dependencies
           run: dotnet restore
+          env:
+            DATABASE_CONECTION_STRING: ${{secrets.DATABASE_CONECTION_STRING}}
 
         - name: Build and publish application
           run: dotnet build --no-restore
