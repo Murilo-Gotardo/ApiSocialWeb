@@ -37,6 +37,7 @@ namespace apiSocialWeb.Infrastructure
             if (connectionString != null)
             {
                 optionsBuilder.UseNpgsql(connectionString.Replace(" ", ""));
+                throw new Exception(connectionString);
             }
             else
             {
