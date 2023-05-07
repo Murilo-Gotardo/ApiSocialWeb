@@ -30,6 +30,6 @@ jobs:
           run: |
             curl -fsSL https://railway.app/install.sh | sh
             export PATH="$HOME/.railway/bin:$PATH"
-            
+                      
         - name: Deploy to Railway
-          run: railway auth --token ${{secrets.RAILWAY_TOKEN}} && railway deploy --project 3ce8d559-7063-4281-a0cf-a43d3000d13c --env c1c84395-d433-431e-b676-69d72261d944 --build-args "PORT=${{env.PORT}}"
+          run: railway --token ${{secrets.RAILWAY_TOKEN}} railway deploy --project 3ce8d559-7063-4281-a0cf-a43d3000d13c --env c1c84395-d433-431e-b676-69d72261d944 --build-args "PORT=${{env.PORT}}"
