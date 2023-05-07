@@ -22,7 +22,7 @@ jobs:
         - name: Restore dependencies
           run: dotnet restore
         - name: Build and publish application
-          run: dotnet publish -c Release -o /app/build
+          run: dotnet publish -c Release -o /src
 
         - name: Install Railway CLI
           run: |
