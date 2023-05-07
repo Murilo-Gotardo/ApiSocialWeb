@@ -1,0 +1,40 @@
+name: Deploy to Railway
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build and publish application
+        run: dotnet publish -c Release -o ${{env.PUBLISH_DIR}}
+
+      - name: Install Railway CLI
+        run: |
+          curl -sSL https://railway.app/cli | bash
+          export PATH="$HOME/.railway/bin:$PATH"
+
+      - name: Login to Railway
+        env:
+          RAILWAY_TOKEN: ${{secrets.RAILWAY_TOKEN}}
+        run: railway login
+
+      - name: Deploy to Railway
+        env:
+          RAILWAY_PROJECT_ID: 3ce8d559-7063-4281-a0cf-a43d3000d13c
+          RAILWAY_ENVIRONMENT_ID: c1c84395-d433-431e-b676-69d72261d944
+        run: railway deploy --build-args "PORT=${{env.PORT}}"
