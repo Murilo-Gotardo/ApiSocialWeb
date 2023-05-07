@@ -10,7 +10,6 @@ using apiSocialWeb.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApi.Application.Swagger;
 
@@ -19,10 +18,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Listen on port provided by Railway
 
 builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
-
-// Add services to the container.
-
-builder.Services.AddDataProtection();
 
 // Build the service provider
 
