@@ -3,25 +3,25 @@ using apiSocialWeb.Domain.Models.LikeAggregate;
 using apiSocialWeb.Domain.Models.NotificationAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
-using Glimpse;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace apiSocialWeb.Infrastructure
 {
     public class ConnectionContext : DbContext
     {
         public DbSet<User> User { get; set; } = default!;
-        public DbSet<Posts> Posts { get; set; } = default!;
-        public DbSet<Comment> Comment { get; set; } = default!;
-        public DbSet<Like> Like { get; set; } = default!;
-        public DbSet<Notification> Notifications { get; set; } = default!;
 
-        private readonly IConfiguration _configuration;
+        public DbSet<Posts> Posts { get; set; } = default!;
+
+        public DbSet<Comment> Comment { get; set; } = default!;
+
+        public DbSet<Like> Like { get; set; } = default!;
+
+        public DbSet<Notification> Notifications { get; set; } = default!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = _configuration.GetConnectionString("Connection");
+            string connectionString = System.Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT");
 
             if (connectionString != null)
             {
@@ -30,7 +30,7 @@ namespace apiSocialWeb.Infrastructure
             }
             else
             {
-                throw new Exception($"Database connection string environment variable not set. {connectionString}");
+                throw new Exception($"Database connection string environment variable not set.");
             }            
         }
 
