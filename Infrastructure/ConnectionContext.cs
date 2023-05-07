@@ -20,27 +20,36 @@ namespace apiSocialWeb.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            string filePath = Path.GetFullPath("appsettings.json");
+                string filePath = Path.GetFullPath("appsettings.json");
 
-            string file = File.ReadAllText(filePath);
+                string file = File.ReadAllText(filePath);
 
-            var settings = new JsonSerializerSettings
+                var settings = new JsonSerializerSettings
+                {
+                    Formatting = Formatting.Indented
+                };
+
+                dynamic jsonObject = JsonConvert.DeserializeObject<dynamic>(file, settings);
+
+                string connectionString = jsonObject.ConnectionString.Connection;
+            try
             {
-                Formatting = Formatting.Indented
-            };
 
-            dynamic jsonObject = JsonConvert.DeserializeObject<dynamic>(file, settings);
-
-            string connectionString = jsonObject.ConnectionString.Connection;
-                   
-            if (connectionString != null)
-            {
-                optionsBuilder.UseNpgsql(connectionString);
+                if (connectionString != null)
+                {
+                    optionsBuilder.UseNpgsql(connectionString);
+                }
+                else
+                {
+                    throw new Exception("Database connection string environment variable not set.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Database connection string environment variable not set.");
+                throw new Exception(connectionString, ex);
             }
+
+            
         }
 
         //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"
