@@ -1,3 +1,4 @@
+using apiSocialWeb;
 using apiSocialWeb.Application.Mapping;
 using apiSocialWeb.Domain.Models.CommentAggregate;
 using apiSocialWeb.Domain.Models.LikeAggregate;
@@ -5,13 +6,14 @@ using apiSocialWeb.Domain.Models.NotificationAggregate;
 using apiSocialWeb.Domain.Models.PostsAggregate;
 using apiSocialWeb.Domain.Models.UserAggregate;
 using apiSocialWeb.Domain.Search;
-using apiSocialWeb.Infrastructure;
 using apiSocialWeb.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApi.Application.Swagger;
+
+AppSettingsEncryptionHelper.DecryptAppSettings("appsettings.json");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,9 @@ builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PO
 
 // Add services to the container.
 
-//builder.Services.AddDbContext<ConnectionContext>();
+builder.Services.AddDataProtection();
+
+// Build the service provider
 
 builder.Services.AddControllers();
 
@@ -29,6 +33,7 @@ builder.Services.AddAutoMapper(typeof(DomainToDTOsMapping));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 
 builder.Services.AddApiVersioning(o =>
 {
@@ -103,5 +108,7 @@ app.UseCors("MyPolicy");
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+AppSettingsEncryptionHelper.EncryptAppSettings("appsettings.json");
 
 app.Run();

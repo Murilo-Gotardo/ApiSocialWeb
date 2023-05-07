@@ -15,15 +15,19 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<Like> Like { get; set; } = default!;
         public DbSet<Notification> Notifications { get; set; } = default!;
 
-        //private readonly string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT").Replace(" ", "");
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT");
+
+            string path = Path.GetFullPath("appsettings.json");
+            AppSettingsEncryptionHelper.DecryptAppSettings(path);
+
+            string connectionString = AppSettingsEncryptionHelper.GetConnectionString(path);
 
             if (connectionString != null)
             {
                 optionsBuilder.UseNpgsql(connectionString);
+
+                AppSettingsEncryptionHelper.EncryptAppSettings(path);
             }
             else
             {
