@@ -20,15 +20,8 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<Notification> Notifications { get; set; } = default!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (connectionString != null)
-            {
-                optionsBuilder.UseNpgsql("Server=containers-us-west-138.railway.app;Port=7774;Database=railway;Username=postgres;Password=ElRrXNyok6t7i1Ki7kJy;");
-            }
-            else
-            {
-                throw new Exception($"Database connection environment variable not set");
-            }            
+        {     
+            optionsBuilder.UseNpgsql("Server=containers-us-west-138.railway.app;Port=7774;Database=railway;Username=postgres;Password=ElRrXNyok6t7i1Ki7kJy;");       
         }
 
         public ConnectionContext() { }
