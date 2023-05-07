@@ -17,22 +17,11 @@ namespace apiSocialWeb.Infrastructure
         public DbSet<Like> Like { get; set; } = default!;
         public DbSet<Notification> Notifications { get; set; } = default!;
 
+        private readonly IConfiguration _configuration;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            string filePath = Path.GetFullPath("appsettings.json");
-
-            string file = File.ReadAllText(filePath);
-
-            var settings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented
-            };
-
-            dynamic jsonObject = JsonConvert.DeserializeObject<dynamic>(file, settings);
-
-            string connectionString = jsonObject.ConnectionString.Connection;
-         
+            string connectionString = _configuration.GetConnectionString("Connection");
 
             if (connectionString != null)
             {
@@ -42,11 +31,7 @@ namespace apiSocialWeb.Infrastructure
             else
             {
                 throw new Exception("Database connection string environment variable not set.");
-            }
-          
-            
-
-            
+            }            
         }
 
         //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"

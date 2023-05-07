@@ -20,15 +20,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
 
-string path = "appsettings.json";
-string json = File.ReadAllText(path);
-dynamic objeto = JsonConvert.DeserializeObject(json);
-
-objeto.ConnectionString.Connection = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT");
-
-string novoJson = JsonConvert.SerializeObject(objeto, Formatting.Indented);
-File.WriteAllText(path, novoJson);
-
 // Add services to the container.
 
 builder.Services.AddDataProtection();
