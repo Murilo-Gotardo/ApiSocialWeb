@@ -13,13 +13,11 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApi.Application.Swagger;
 
-throw new Exception(Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT"));
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Listen on port provided by Railway
 
-builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
+//builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
 
 
 // Build the service provider

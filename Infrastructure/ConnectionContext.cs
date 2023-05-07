@@ -21,11 +21,11 @@ namespace apiSocialWeb.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING");
+            string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
 
             if (connectionString != null)
             {
-                optionsBuilder.UseNpgsql(connectionString.Replace(" ", ""));
+                optionsBuilder.UseNpgsql(connectionString);
             }
             else
             {
