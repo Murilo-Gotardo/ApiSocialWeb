@@ -32,5 +32,5 @@ jobs:
             export PATH="$HOME/.railway/bin:$PATH
           
           env:
-            RAILWAY_TOKEN: ${{env.RAILWAY_TOKEN}} >> $GITHUB_ENV
+            RAILWAY_TOKEN: ${{env.RAILWAY_TOKEN}}
             run: railway up --detach
