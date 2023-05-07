@@ -26,7 +26,7 @@ jobs:
           run: mkdir /app
 
         - name: Build and publish application
-          run: dotnet publish -c Release -o /app
+          run: dotnet build --no-restore
  
 
         - name: Install Railway CLI
