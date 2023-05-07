@@ -14,18 +14,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
         - uses: actions/checkout@v3
         - name: Setup .NET
           uses: actions/setup-dotnet@v3
           with:
             dotnet-version: 7.0.x
+            
+        - name: Setup environment variables
+          env:
+            DATABASE_CONECTION_STRING: ${{secrets.DATABASE_CONECTION_STRING}}
+            
         - name: Restore dependencies
           run: dotnet restore
 
         - name: Build and publish application
           run: dotnet build --no-restore
- 
-
+          
         - name: Install Railway CLI
           run: |
             curl -fsSL https://railway.app/install.sh | sh
