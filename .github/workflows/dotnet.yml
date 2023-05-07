@@ -29,7 +29,7 @@ jobs:
         - name: Install Railway CLI
           run: |
             curl -fsSL https://railway.app/install.sh | sh
-            export PATH="$HOME/.railway/bin:$PATH
+            export PATH="$HOME/.railway/bin:$PATH"
           
           env:
             RAILWAY_TOKEN: ${{env.RAILWAY_TOKEN}}
