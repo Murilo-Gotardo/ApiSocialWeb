@@ -19,6 +19,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
 
+throw new Exception(Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT"));
+
 // Build the service provider
 
 builder.Services.AddControllers();
