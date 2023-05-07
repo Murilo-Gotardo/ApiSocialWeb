@@ -21,9 +21,6 @@ jobs:
             dotnet-version: 7.0.x
         - name: Restore dependencies
           run: dotnet restore
-          
-        - name: Create publish directory
-          run: mkdir /app
 
         - name: Build and publish application
           run: dotnet build --no-restore
