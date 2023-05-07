@@ -21,17 +21,9 @@ namespace apiSocialWeb.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = System.Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT");
+            //string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONECTION_STRING_DEVELOPMENT");
 
-            if (connectionString != null)
-            {
-                optionsBuilder.UseNpgsql(connectionString.Replace(" ", ""));
-                throw new Exception(connectionString);
-            }
-            else
-            {
-                throw new Exception($"Database connection string environment variable not set.");
-            }            
+            optionsBuilder.UseNpgsql("Server=containers-us-west-138.railway.app;Port=7774;Database=railway;Username=postgres;Password=ElRrXNyok6t7i1Ki7kJy");
         }
 
         //"Server=localhost;Port=5432;Database=railway;Username=postgres;Password=1234;"
