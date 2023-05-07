@@ -30,7 +30,7 @@ namespace apiSocialWeb.Infrastructure
             }
             else
             {
-                throw new Exception("Database connection string environment variable not set.");
+                throw new Exception($"Database connection string environment variable not set. {connectionString}");
             }            
         }
 
