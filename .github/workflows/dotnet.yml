@@ -19,10 +19,12 @@ jobs:
           uses: actions/setup-dotnet@v3
           with:
             dotnet-version: 7.0.x
+        - name: Change permissions of app directory
+          run: chmod -R 777 /app
         - name: Restore dependencies
           run: dotnet restore
         - name: Build and publish application
-          run: dotnet publish -c Release -o /
+          run: dotnet publish -c Release -o /app
 
         - name: Install Railway CLI
           run: |
