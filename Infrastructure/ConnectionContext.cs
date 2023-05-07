@@ -20,34 +20,30 @@ namespace apiSocialWeb.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-                string filePath = Path.GetFullPath("appsettings.json");
+            string filePath = Path.GetFullPath("appsettings.json");
 
-                string file = File.ReadAllText(filePath);
+            string file = File.ReadAllText(filePath);
 
-                var settings = new JsonSerializerSettings
-                {
-                    Formatting = Formatting.Indented
-                };
-
-                dynamic jsonObject = JsonConvert.DeserializeObject<dynamic>(file, settings);
-
-                string connectionString = jsonObject.ConnectionString.Connection;
-            try
+            var settings = new JsonSerializerSettings
             {
+                Formatting = Formatting.Indented
+            };
 
-                if (connectionString != null)
-                {
-                    optionsBuilder.UseNpgsql(connectionString);
-                }
-                else
-                {
-                    throw new Exception("Database connection string environment variable not set.");
-                }
-            }
-            catch (Exception ex)
+            dynamic jsonObject = JsonConvert.DeserializeObject<dynamic>(file, settings);
+
+            string connectionString = jsonObject.ConnectionString.Connection;
+         
+
+            if (connectionString != null)
             {
-                throw new Exception(connectionString, ex);
+                optionsBuilder.UseNpgsql(connectionString.Replace(" ", ""));
             }
+            else
+            {
+                throw new Exception("Database connection string environment variable not set.");
+            }
+          
+            
 
             
         }
