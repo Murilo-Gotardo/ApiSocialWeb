@@ -33,12 +33,8 @@ jobs:
           run: |
             curl -fsSL https://railway.app/install.sh | sh
             export PATH="$HOME/.railway/bin:$PATH"
-          
-        - name: Initialize railway repository
           env:
             RAILWAY_TOKEN: ${{env.RAILWAY_TOKEN}}
-            run: railway init
-          run: railway link 3ce8d559-7063-4281-a0cf-a43d3000d13c
             
         - name: Deploy to Railway
           run: railway up --detach
