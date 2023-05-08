@@ -35,10 +35,10 @@ jobs:
             export PATH="$HOME/.railway/bin:$PATH"
           
         - name: Initialize railway repository
-          run: railway init
           env:
             RAILWAY_TOKEN: ${{env.RAILWAY_TOKEN}}
-            run: railway link 3ce8d559-7063-4281-a0cf-a43d3000d13c
+            run: railway init
+          run: railway link 3ce8d559-7063-4281-a0cf-a43d3000d13c
             
         - name: Deploy to Railway
           run: railway up --detach
