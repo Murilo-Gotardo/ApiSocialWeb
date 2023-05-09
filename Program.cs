@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Listen on port provided by Railway
 
-//builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
+builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
 
 // Build the service provider
 
